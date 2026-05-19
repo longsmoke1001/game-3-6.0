@@ -97,7 +97,7 @@ public class Player : Character
                 {
                     Debug.Log("attack");
                     currHealth += playerData.healthOnHit;
-                    e.TakeDamage(playerData.attackPower,this);
+                    e.TakeDamage(playerData.attackPower, this);
                 }
             state = PlayerState.Idle;
         }
@@ -149,7 +149,7 @@ public class Player : Character
     }
     void TryDefend()
     {
-        if (Input.GetMouseButton(1)&&Time.time-lastDefendTime> playerData.defendCooldown)
+        if (Input.GetMouseButton(1) && Time.time - lastDefendTime > playerData.defendCooldown)
         {
             state = PlayerState.Defending;
             lastDefendTime = Time.time;
@@ -170,7 +170,8 @@ public class Player : Character
     {
         if (state == PlayerState.Defending)
         {
-            if (playerData!=null&&this!=null)source.TakeDamage(playerData.attackPower, this);
+            Debug.Log("defend");
+            if (playerData != null && this != null) source.TakeDamage(playerData.attackPower, this);
             return;
         }
         base.TakeDamage(amount, source);
