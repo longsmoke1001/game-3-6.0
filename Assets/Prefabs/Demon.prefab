@@ -4328,19 +4328,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <currHealth>k__BackingField: 100
   <maxHealth>k__BackingField: 100
-  healthBarPrefab: {fileID: 0}
+  healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
   healthBarParent: {fileID: 0}
   movSpeed: 2
   gameManager: {fileID: 0}
   chaseRange: 5
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   attackRange: 10
   attackPower: 5
   attackSpeed: 0.5
+  attackDelay: 0.4
   fireball: {fileID: 5027588823293223172, guid: b01f13829104b884b8ea8828906f1dd0, type: 3}
-  ring: {fileID: 0}
+  ring: {fileID: 2136775353885230160, guid: 9c462bbf867ecd1439bf0ffcad63b52e, type: 3}
 --- !u!1 &2137996574534228426
 GameObject:
   m_ObjectHideFlags: 0

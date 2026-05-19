@@ -5,7 +5,7 @@ using UnityEngine;
 public class Skeleton : EnemyAttacker
 {
     protected float lastAttackTime = -9999f;
-    protected float attackDelay = 0.2f;
+    [SerializeField] protected float attackDelay = 0.2f;
 
     // Update is called once per frame
     protected override void Update()
@@ -54,7 +54,7 @@ public class Skeleton : EnemyAttacker
 
     }
 
-    protected void TryAttack()
+    protected virtual void TryAttack()
     {
         if ((player.transform.position - transform.position).magnitude < attackRange && Time.time - lastAttackTime > 1 / attackSpeed)
         {

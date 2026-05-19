@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Demon : EnemyAttacker
+public class Demon : Skeleton
 {
-    float lastAttackTime = -9999f;
-    float attackDelay = 0.4f; // Time between attacks in seconds
     [SerializeField] GameObject fireball;
     [SerializeField] GameObject ring;
     float fireTime = 0.5f;
@@ -22,41 +20,50 @@ public class Demon : EnemyAttacker
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
-        switch (state)
-        {
-            case EnemyState.Patrolling:
-                Patrol();
-                TryAttack();
-                break;
-            case EnemyState.Chasing:
-                break;
-            case EnemyState.Attacking:
-                HandleAttack();
-                break;
-        }
-    }
+    //protected override void Update()
+    //{
+    //    switch (state)
+    //    {
+    //        case EnemyState.Patrolling:
+    //            Patrol();
+    //            TryAttack();
+    //            break;
+    //        case EnemyState.Chasing:
+    //            break;
+    //        case EnemyState.Attacking:
+    //            HandleAttack();
+    //            break;
+    //    }
+    //}
 
-    void HandleAttack()
+    override protected void HandleAttack()
     {
         if (Time.time - lastAttackTime > attackDelay)
         {
             lastAttackTime = Time.time;
             state = EnemyState.Patrolling;
             if (Time.time - lastRingTime > ringCooldown)
-                Ring();
+            {
+                lastRingTime = Time.time;
+                GameObject r = Instantiate(ring, transform.position, Quaternion.identity);
+                r.GetComponent<Fire>().damage = attackPower;
+                r.GetComponent<Fire>().source = this;
+                r.SetActive(true);
+                Ring(r);
+            }
             else
-                Fireball();
+            {
+                GameObject f = Instantiate(fireball, transform.position, Quaternion.Euler(0, 0, firingAngle));
+                f.GetComponent<Fire>().damage = attackPower;
+                f.GetComponent<Fire>().source = this;
+                f.SetActive(true);
+                Fireball(f);
+            }
         }
     }
 
-    async Task Ring()
+    async Task Ring(GameObject r)
     {
-        lastRingTime = Time.time;
-        GameObject r = Instantiate(ring, transform.position, Quaternion.identity);
-        //r.GetComponent<Fire>().source = this;
-        //r.GetComponent<Fire>().damage = attackPower;
         for (int i = 0; i < 5; i++)
         {
             await Task.Delay((int)(ringTime * 200));
@@ -64,13 +71,12 @@ public class Demon : EnemyAttacker
         }
         Destroy(r);
     }
-    async Task Fireball()
+    async Task Fireball(GameObject f)
     {
-        GameObject f = Instantiate(fireball, transform.position, Quaternion.Euler(0, 0, firingAngle));
         await Task.Delay((int)(fireTime * 1000));
         Destroy(f);
     }
-    void TryAttack()
+    override protected void TryAttack()
     {
         if ((player.transform.position - transform.position).magnitude < attackRange && Time.time - lastAttackTime > 1 / attackSpeed)
         {
