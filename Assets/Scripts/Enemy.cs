@@ -13,14 +13,9 @@ public class Enemy : Character
     bool isDead;
     protected Animator anim;
     protected Vector2 spawnPos;
-    protected EnemyState state;
+
     [SerializeField] protected GameManager gameManager;
-    public enum EnemyState
-    {
-        Patrolling,
-        Attacking,
-        Chasing,
-    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {   

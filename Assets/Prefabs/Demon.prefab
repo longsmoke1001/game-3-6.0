@@ -1315,7 +1315,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064042431784126943}
-  m_LocalRotation: {x: -0, y: 0.008726557, z: -0, w: 0.9999619}
+  m_LocalRotation: {x: 0, y: 0.008726558, z: 0, w: 0.999962}
   m_LocalPosition: {x: 0, y: 0, z: 0.00015256465}
   m_LocalScale: {x: 4.4, y: 4.4, z: 4.4}
   m_ConstrainProportionsScale: 1
@@ -4326,8 +4326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fe805207d973a46afb0b2f045f2509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <currHealth>k__BackingField: 100
-  <maxHealth>k__BackingField: 100
+  <currHealth>k__BackingField: 50
+  <maxHealth>k__BackingField: 50
   healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
   healthBarParent: {fileID: 0}
   movSpeed: 2
@@ -4342,6 +4342,9 @@ MonoBehaviour:
   attackDelay: 0.4
   fireball: {fileID: 5027588823293223172, guid: b01f13829104b884b8ea8828906f1dd0, type: 3}
   ring: {fileID: 2136775353885230160, guid: 9c462bbf867ecd1439bf0ffcad63b52e, type: 3}
+  ringRadius: 1.75
+  circle: {fileID: 8399493129761035464, guid: 4e86a1d8fea3dec4b931adfb3ec5dc34, type: 3}
+  state: 0
 --- !u!1 &2137996574534228426
 GameObject:
   m_ObjectHideFlags: 0

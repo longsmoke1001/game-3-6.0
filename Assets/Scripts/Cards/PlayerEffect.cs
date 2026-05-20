@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerEffect", menuName = "CardEffects/PlayerEffect")]
@@ -18,6 +19,7 @@ public class PlayerEffect : Card
     [SerializeField] PlayerEffectType effectType;
     [SerializeField] float effectValue;
     [SerializeField] Player player;
+    //public override string Description => effectType.ToString()+"X"+effectValue;
 
     public override void Apply()
     {

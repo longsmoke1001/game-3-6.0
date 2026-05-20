@@ -6,6 +6,7 @@ public class Fire : MonoBehaviour
     public Character source;
     bool contacted = false;
     float startingTime;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Fire hit: " + collision.gameObject.name);

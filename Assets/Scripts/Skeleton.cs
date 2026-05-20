@@ -8,6 +8,13 @@ public class Skeleton : EnemyAttacker
     [SerializeField] protected float attackDelay = 0.2f;
 
     // Update is called once per frame
+    protected EnemyState state;
+    public enum EnemyState
+    {
+        Patrolling,
+        Attacking,
+        Chasing,
+    }
     protected override void Update()
     {
         base.Update();

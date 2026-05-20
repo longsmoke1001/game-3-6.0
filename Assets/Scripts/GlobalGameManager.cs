@@ -7,6 +7,9 @@ public class GlobalGameManager : MonoBehaviour
     public static GlobalGameManager instance;
     public int currentLevel = 1;
     [SerializeField] PlayerData playerData;
+    public List<Card> cardList;
+    public List<Card> runtimeCardList;
+    public List<Card> usedCards;
     void Awake()
     {
         if (instance == null)
@@ -16,11 +19,14 @@ public class GlobalGameManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+        playerData.Reset();
+        foreach (var card in cardList)
+            runtimeCardList.Add(Instantiate(card));
     }
     // Start is called before the first frame update
     void Start()
     {
-        playerData.Reset();
+
     }
 
     // Update is called once per frame

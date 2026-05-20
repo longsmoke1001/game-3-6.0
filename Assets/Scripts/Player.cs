@@ -92,7 +92,7 @@ public class Player : Character
     {
         if (Time.time - lastAttackTime > playerData.attackdelay)
         {
-            foreach (var e in gameManager.enemies)
+            foreach (var e in gameManager.Enemies)
                 if ((e.transform.position - transform.position).magnitude < playerData.attackRange)
                 {
                     Debug.Log("attack");

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfdf4808cb0cc344180d36a8a538db64, type: 3}
   m_Name: AttackRange
   m_EditorClassIdentifier: 
-  description: atk rangeX2
+  description: attack rangeX1.5
+  usesRemaining: 3
   effectType: 2
-  effectValue: 2
+  effectValue: 1.5
   player: {fileID: 5830071295745790717, guid: 44352f06898d85848829e1d104a2e646, type: 3}

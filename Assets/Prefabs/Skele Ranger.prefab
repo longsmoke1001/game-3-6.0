@@ -5159,9 +5159,10 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
-  attackRange: 10
+  attackRange: 20
   attackPower: 5
   attackSpeed: 0.5
+  attackDelay: 0.2
   projectilePrefab: {fileID: 3549352669105276540, guid: d60c1ba0cb2d36e43b3923ca36cd26b9, type: 3}
 --- !u!61 &2697365570260039096
 BoxCollider2D:

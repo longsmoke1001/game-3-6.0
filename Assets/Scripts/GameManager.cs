@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
-    public List<Enemy> enemies { get; private set; } = new List<Enemy>();
+    public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
     [SerializeField] GameObject winning;
     [SerializeField] Button nextStageButton;
     [SerializeField] Button exitButton;
@@ -16,57 +15,89 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<Button> cardButtons;
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<Card> cardList;
-    List<Card> usedList;
+    [SerializeField] List<Card> usedList;
     [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] TextMeshProUGUI stageText;
     [SerializeField] List<GameObject> levels;
+    [SerializeField] bool notLosing = false;
+    [SerializeField] int enemyTotal;
+    [SerializeField] int enemiesKilled;
+    [SerializeField] TextMeshProUGUI enemyText;
+    [SerializeField] GameObject portal;
+    [SerializeField] AudioClip bossClip;
+    [SerializeField] GlobalGameManager globalGameManager;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
     {
-        enemies.Add(enemy);
+        Enemies.Add(enemy);
+        enemyTotal++;
+        UpdateText();
     }
 
     public void RemoveEnemy(Enemy enemy)
     {
-        enemies.Remove(enemy);
+        Enemies.Remove(enemy);
+        enemiesKilled++;
+        UpdateText();
+        if ((float)enemiesKilled / (float)enemyTotal > 0.799999f)
+        {
+            enemyText.color = new Color(0, 255, 0, 255);
+            portal.SetActive(true);
+        }
     }
     void Start()
     {
-        Instantiate(levels[GlobalGameManager.instance.currentLevel-1]);
+        globalGameManager = GlobalGameManager.instance;
+        Instantiate(levels[(globalGameManager.currentLevel-1)%4]);
+        if ((globalGameManager.currentLevel - 1) % 4 == 3)
+            audioSource.clip = bossClip;
+        portal = FindAnyObjectByType<Portal>().gameObject;
+        portal.SetActive(false);
         audioSource.Play();
         audioSource.volume = 0.2f;
-        stageText.text = "Stage " + GlobalGameManager.instance.currentLevel;
+        stageText.text = "Stage " + globalGameManager.currentLevel;
+
         Time.timeScale = 1;
         nextStageButton.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(1));
         exitButton.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(0));
+        cardList = globalGameManager.runtimeCardList;
         List<int> indexList = new List<int> { -1, -1, -1 };
-        for (int i = 0; i < cardButtons.Count; i++) { 
+        for (int i = 0; i < Mathf.Min(cardButtons.Count,cardList.Count); i++) { 
             indexList[i] = UnityEngine.Random.Range(0, cardList.Count-i);
             for (int j = 0; j < i; j++)
                 indexList[i] += indexList[i] >= indexList[j] ? 1 : 0;
         }
         Debug.Log("Card index: " + indexList[0] + " " + indexList[1] + " " + indexList[2]);
-        for (int i=0;i<cardButtons.Count;i++)
+        for (int i=0;i< Mathf.Min(cardButtons.Count, cardList.Count); i++)
         {
-            int x = i;
-            cardButtons[x].onClick.AddListener(() =>
+            Card card = cardList[indexList[i]];
+            cardButtons[i].onClick.AddListener(() =>
             {
-                cardList[indexList[x]].Apply();
+                card.Apply();
+                card.usesRemaining--;
+                if (card.usesRemaining <= 0)
+                {
+                    cardList.Remove(card);
+                    globalGameManager.usedCards.Add(card);
+                }
                 winning.SetActive(true);
                 cards.SetActive(false);
             });
-            cardButtons[x].GetComponentInChildren<TextMeshProUGUI>().text = cardList[indexList[x]].description;
+            cardButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = cardList[indexList[i]].description;
         }
     }
 
     public void Losing()
-    {
-        Debug.Log("You lose!");
-        Time.timeScale = 0;
-        winning.SetActive(true);
-        nextStageButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
-        gameOverText.text="Game Over";
+    {   
+        if (!notLosing)
+        {
+            Debug.Log("You lose!");
+            Time.timeScale = 0;
+            winning.SetActive(true);
+            nextStageButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";
+            gameOverText.text = "Game Over";
+        }
     }
     public void Winning()
     {
@@ -81,8 +112,8 @@ public class GameManager : MonoBehaviour
         cards.SetActive(true);
     }
     // Update is called once per frame
-    void Update()
+    void UpdateText()
     {
-
+        enemyText.text = "killed enemy" + enemiesKilled + "/" + enemyTotal+"\ntarget:"+Mathf.CeilToInt((float)enemyTotal*4/5);
     }
 }
