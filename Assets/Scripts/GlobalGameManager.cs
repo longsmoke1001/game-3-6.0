@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GlobalGameManager : MonoBehaviour
 {
-    public static GlobalGameManager instance;
+    public static GlobalGameManager Instance { get; private set; }
     public int currentLevel = 1;
     [SerializeField] PlayerData playerData;
     public List<Card> cardList;
@@ -12,21 +12,21 @@ public class GlobalGameManager : MonoBehaviour
     public List<Card> usedCards;
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
             Destroy(gameObject);
-        playerData.Reset();
+
         foreach (var card in cardList)
             runtimeCardList.Add(Instantiate(card));
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        playerData.Reset();
     }
 
     // Update is called once per frame

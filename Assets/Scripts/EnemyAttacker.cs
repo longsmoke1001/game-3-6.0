@@ -18,7 +18,6 @@ public class EnemyAttacker : Enemy
     protected override void Start()
     {
         base.Start();
-        spawnPos = transform.position;
         targetPos = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)) + spawnPos;
         player = FindAnyObjectByType<Player>();
         if (player != null)
@@ -56,7 +55,6 @@ public class EnemyAttacker : Enemy
                 anim.SetBool("1_Move", false);
         }
     }
-
     protected bool CanSeePlayer()
     {
         if (playerTransform == null)

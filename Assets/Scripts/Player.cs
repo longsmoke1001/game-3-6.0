@@ -56,12 +56,20 @@ public class Player : Character
                 HandleDashing();
                 break;
             case PlayerState.Attacking:
+                if (playerData.canMoveWhileAttacking)
+                    HandleMoving();
                 HandleAttacking();
                 break;
             case PlayerState.Defending:
+                if (playerData.canMoveWhileDefending)
+                    HandleMoving();
                 HandleDefending();
                 break;
         }
+        if (Input.GetKeyDown(KeyCode.D))
+            transform.localScale = new Vector2(-1, 1);
+        if (Input.GetKeyDown(KeyCode.A))
+            transform.localScale = new Vector2(1, 1);
         if (currHealth <= 0)
         {
             gameManager.Losing();
@@ -133,10 +141,6 @@ public class Player : Character
             transform.Translate(Vector2.left * Time.deltaTime * playerData.movSpeed);
         if (Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * playerData.movSpeed);
-        if (Input.GetKeyDown(KeyCode.D))
-            transform.localScale = new Vector2(-1, 1);
-        if (Input.GetKeyDown(KeyCode.A))
-            transform.localScale = new Vector2(1, 1);
     }
     void TryAttack()
     {

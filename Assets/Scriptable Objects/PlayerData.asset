@@ -23,3 +23,6 @@ MonoBehaviour:
   defendCooldown: 2
   attackSpeed: 0.5
   attackdelay: 0.2
+  healthOnHit: 0
+  canMoveWhileAttacking: 0
+  canMoveWhileDefending: 0

@@ -14,7 +14,9 @@ public class PlayerEffect : Card
         AttackRange,
         MovSpeed,
         AttackSpeed,
-        HealthOnHit
+        HealthOnHit,
+        CanMoveWhileAttacking,
+        CanMoveWhileDefending
     }
     [SerializeField] PlayerEffectType effectType;
     [SerializeField] float effectValue;
@@ -42,6 +44,12 @@ public class PlayerEffect : Card
                 break;
             case PlayerEffectType.HealthOnHit:
                 player.playerData.healthOnHit += effectValue;
+                break;
+            case PlayerEffectType.CanMoveWhileAttacking:
+                player.playerData.canMoveWhileAttacking = true;
+                break;
+            case PlayerEffectType.CanMoveWhileDefending:
+                player.playerData.canMoveWhileDefending = true;
                 break;
         }
     }

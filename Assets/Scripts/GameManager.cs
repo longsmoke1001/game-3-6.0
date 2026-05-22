@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
+    [field:SerializeField] public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
     [SerializeField] GameObject winning;
     [SerializeField] Button nextStageButton;
     [SerializeField] Button exitButton;
@@ -48,8 +48,12 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        globalGameManager = GlobalGameManager.instance;
+        globalGameManager = GlobalGameManager.Instance;
         Instantiate(levels[(globalGameManager.currentLevel-1)%4]);
+        foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
+        {
+            e.Init();
+        }
         if ((globalGameManager.currentLevel - 1) % 4 == 3)
             audioSource.clip = bossClip;
         portal = FindAnyObjectByType<Portal>().gameObject;
@@ -102,7 +106,7 @@ public class GameManager : MonoBehaviour
     public void Winning()
     {
         Debug.Log("You win!");
-        GlobalGameManager.instance.currentLevel++;
+        globalGameManager.currentLevel++;
         Time.timeScale = 0;
         SpawnCards();
     }
@@ -114,6 +118,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void UpdateText()
     {
-        enemyText.text = "killed enemy" + enemiesKilled + "/" + enemyTotal+"\ntarget:"+Mathf.CeilToInt((float)enemyTotal*4/5);
+        enemyText.text = "enemies killed:" + enemiesKilled + "/" + enemyTotal+"\ntarget:"+Mathf.CeilToInt((float)enemyTotal*4/5);
     }
 }

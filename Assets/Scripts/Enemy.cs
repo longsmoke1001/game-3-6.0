@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+
 
 public class Enemy : Character
 {
@@ -18,7 +18,8 @@ public class Enemy : Character
 
     // Start is called before the first frame update
     protected virtual void Start()
-    {   
+    {
+        spawnPos = transform.position;
         if (gameManager == null)
             gameManager = FindAnyObjectByType<GameManager>();
         gameManager.AddEnemy(this);
@@ -39,6 +40,18 @@ public class Enemy : Character
         }
     }
 
+    public void Init()
+    {
+        if (gameManager == null)
+            gameManager = FindAnyObjectByType<GameManager>();
+        maxHealth *= 1 + ((int)GlobalGameManager.Instance.currentLevel - 1) / 4;
+        currHealth = maxHealth;
+        for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / 4; i++)
+        {
+            Enemy enemy_ = Instantiate(gameObject, transform.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0), Quaternion.identity).GetComponent<Enemy>();
+        }
+
+    }
     protected virtual void Update()
     {
         if (!isDead && currHealth <= 0f)

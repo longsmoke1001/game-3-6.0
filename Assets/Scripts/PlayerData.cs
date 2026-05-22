@@ -17,6 +17,8 @@ public class PlayerData : ScriptableObject
      public float attackSpeed = 0.5f;
      public float attackdelay = 0.2f;
      public float healthOnHit = 0f;
+     public bool canMoveWhileAttacking = false;
+     public bool canMoveWhileDefending = false;
 
     public void Reset()
     {
@@ -32,5 +34,7 @@ public class PlayerData : ScriptableObject
         attackSpeed = 0.5f;
         attackdelay = 0.2f;
         healthOnHit = 0f;
+        canMoveWhileAttacking = false;
+        canMoveWhileDefending = false;
     }
 }
