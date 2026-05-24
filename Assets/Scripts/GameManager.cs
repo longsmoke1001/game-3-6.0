@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [field:SerializeField] public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
+    [field: SerializeField] public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
     [SerializeField] GameObject winning;
     [SerializeField] Button nextStageButton;
     [SerializeField] Button exitButton;
+    [SerializeField] Button resume;
+    [SerializeField] Button exitButton2;
     [SerializeField] GameObject cards;
     [SerializeField] List<Button> cardButtons;
     [SerializeField] AudioSource audioSource;
@@ -26,6 +28,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject portal;
     [SerializeField] AudioClip bossClip;
     [SerializeField] GlobalGameManager globalGameManager;
+    [SerializeField] AudioClip boss2Clip;
+    [SerializeField] GameObject lastLevel;
+    [SerializeField] GameObject levelTen;
+    [SerializeField] GameObject pause;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
@@ -51,13 +57,21 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         globalGameManager = GlobalGameManager.Instance;
-        //Instantiate(Levels[(globalGameManager.currentLevel-1)%Levels.Count]);
+        if (globalGameManager.currentLevel == 15)
+            Instantiate(lastLevel);
+        else if (globalGameManager.currentLevel == 10)
+            Instantiate(levelTen);
+        else
+            Instantiate(Levels[(globalGameManager.currentLevel - 1) % Levels.Count]);
         foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
             e.Init();
         }
+
         if ((globalGameManager.currentLevel - 1) % Levels.Count == 3)
             audioSource.clip = bossClip;
+        else if ((globalGameManager.currentLevel - 1) % Levels.Count == 4|| globalGameManager.currentLevel==15)
+            audioSource.clip = boss2Clip;
         portal = FindAnyObjectByType<Portal>().gameObject;
         portal.SetActive(false);
         audioSource.Play();
@@ -67,15 +81,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         nextStageButton.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(1));
         exitButton.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(0));
+        exitButton2.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene(0));
+        resume.onClick.AddListener(() =>
+        {
+            Time.timeScale = 1;
+            pause.SetActive(false);
+        });
         cardList = globalGameManager.runtimeCardList;
         List<int> indexList = new List<int> { -1, -1, -1 };
-        for (int i = 0; i < Mathf.Min(cardButtons.Count,cardList.Count); i++) { 
-            indexList[i] = UnityEngine.Random.Range(0, cardList.Count-i);
+        for (int i = 0; i < Mathf.Min(cardButtons.Count, cardList.Count); i++)
+        {
+            indexList[i] = UnityEngine.Random.Range(0, cardList.Count - i);
             for (int j = 0; j < i; j++)
                 indexList[i] += indexList[i] >= indexList[j] ? 1 : 0;
         }
         Debug.Log("Card index: " + indexList[0] + " " + indexList[1] + " " + indexList[2]);
-        for (int i=0;i< Mathf.Min(cardButtons.Count, cardList.Count); i++)
+        for (int i = 0; i < Mathf.Min(cardButtons.Count, cardList.Count); i++)
         {
             Card card = cardList[indexList[i]];
             cardButtons[i].onClick.AddListener(() =>
@@ -94,8 +115,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 1-Time.timeScale;
+            pause.SetActive(!pause.activeSelf);
+        }
+    }
     public void Losing()
-    {   
+    {
         if (!notLosing)
         {
             Debug.Log("You lose!");
@@ -120,6 +149,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void UpdateText()
     {
-        enemyText.text = "enemies killed:" + enemiesKilled + "/" + enemyTotal+"\ntarget:"+Mathf.CeilToInt((float)enemyTotal*4/5);
+        enemyText.text = "enemies killed:" + enemiesKilled + "/" + enemyTotal + "\ntarget:" + Mathf.CeilToInt((float)enemyTotal * 4 / 5);
     }
 }

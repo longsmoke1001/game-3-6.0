@@ -7,7 +7,7 @@ public class Enemy : Character
 {
     [SerializeField] protected HealthBar healthBarPrefab;
     [SerializeField] protected Transform healthBarParent;
-    [SerializeField] protected float movSpeed=2f;
+    [SerializeField] protected float movSpeed = 2f;
     protected Player player;
     protected HealthBar healthBar;
     bool isDead;
@@ -47,10 +47,11 @@ public class Enemy : Character
             gameManager = FindAnyObjectByType<GameManager>();
         maxHealth *= 1 + ((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count;
         currHealth = maxHealth;
-        for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count; i++)
-        {
-            Enemy enemy_ = Instantiate(gameObject, transform.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0), Quaternion.identity).GetComponent<Enemy>();
-        }
+        if (GlobalGameManager.Instance.currentLevel != 15&& GlobalGameManager.Instance.currentLevel != 10)
+            for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count; i++)
+            {
+                Enemy enemy_ = Instantiate(gameObject, transform.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0), Quaternion.identity).GetComponent<Enemy>();
+            }
 
     }
 

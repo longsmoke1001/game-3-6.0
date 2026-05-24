@@ -104,7 +104,7 @@ public class Player : Character
                 if ((e.transform.position - transform.position).magnitude < playerData.attackRange)
                 {
                     Debug.Log("attack");
-                    currHealth += playerData.healthOnHit;
+                    currHealth =Mathf.Min(currHealth+playerData.healthOnHit, maxHealth);
                     e.TakeDamage(playerData.attackPower, this);
                 }
             state = PlayerState.Idle;
@@ -175,7 +175,7 @@ public class Player : Character
         if (state == PlayerState.Defending)
         {
             Debug.Log("defend");
-            if (playerData != null && this != null) source.TakeDamage(playerData.attackPower, this);
+            if (playerData != null && this != null) source.TakeDamage(playerData.attackPower*playerData.reflectedDamageMultiplier, this);
             return;
         }
         base.TakeDamage(amount, source);

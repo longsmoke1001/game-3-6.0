@@ -123,6 +123,7 @@ public class Demon : EnemyAttacker
         Destroy(c);
         GameObject r = Instantiate(ring, ringPos, Quaternion.identity);
         //r.transform.localScale = new Vector3(ringRadius, ringRadius, 1);
+        Destroy(r, ringTime);
         r.GetComponent<Fire>().damage = attackPower;
         r.GetComponent<Fire>().source = this;
         r.SetActive(true);
@@ -131,7 +132,6 @@ public class Demon : EnemyAttacker
             r.GetComponent<CircleCollider2D>().radius = ringRadius /6*(i+1)/5;
             await Task.Delay((int)(ringTime * 200));
         }
-        Destroy(r);
     }
     async Task Fireball(GameObject f)
     {

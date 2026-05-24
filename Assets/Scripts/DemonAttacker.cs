@@ -9,12 +9,14 @@ public class DemonAttacker : EnemyAttacker
     float damagingRange = 3f;
     Vector3 toPlayer;
     [SerializeField] GameObject circle;
-    float lastSpinTime = -9999f;
-    float spinCooldown = 5f;
-    float spinDuration = 2f;
+    float lastSpinTime = -5f;
+    float spinCooldown = 10f;
+    float spinDuration = 5f;
     float spinAnimationTime=0.2f;
-    float localScaleX=5f;
-    [SerializeField] GameObject tornado;
+    float spinningSpeed = 20f;
+    float rotatingSpeed = 150f;
+    float currentAngle=0f;
+    [SerializeField] Tornado tornado;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     override protected void Start()
@@ -57,11 +59,21 @@ public class DemonAttacker : EnemyAttacker
 
     void HandleSpinning()
     {
-        if (Time.time-lastSpinTime<spinAnimationTime)
-            transform.localScale = new Vector3(localScaleX*(1-Time.time/spinAnimationTime), 0,0);
-        else if (Time.time-lastSpinTime<spinDuration&&Time.time-lastSpinTime>spinDuration-spinAnimationTime)
-            transform.localScale = new Vector3(localScaleX *((lastSpinTime+spinDuration-Time.time)/spinAnimationTime), 0,0);
-        else if (Time.time - lastSpinTime > spinDuration)
+        float process = Time.time - lastSpinTime;
+        float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg - currentAngle% 360;
+        currentAngle +=angle<180&&angle>0||angle<-180?Time.deltaTime*rotatingSpeed:-Time.deltaTime * rotatingSpeed;
+        if (currentAngle > 180)
+            currentAngle -= 360;
+        else if (currentAngle < -180)
+            currentAngle += 360;
+        transform.Translate(new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0)*spinningSpeed*Time.deltaTime,Space.World);
+        if (process < spinAnimationTime)
+            transform.rotation = Quaternion.Euler(0, 90*process / spinAnimationTime, 0);
+        else if (process > spinAnimationTime && process < spinDuration - spinAnimationTime)
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        else if (process < spinDuration && process > spinDuration - spinAnimationTime)
+            transform.rotation = Quaternion.Euler(0, 90*(1-((process - spinDuration + spinAnimationTime) / spinAnimationTime)), 0);
+        else if (process > spinDuration)
         {
             state = EnemyState.Idle;
         }
@@ -69,7 +81,11 @@ public class DemonAttacker : EnemyAttacker
     void Spin()
     {
         state = EnemyState.Spinning;
-        Destroy(Instantiate(tornado, transform.position,Quaternion.identity,transform),spinDuration);
+        Tornado t = Instantiate(tornado, transform.position, Quaternion.Euler(0, 90, 0), transform);
+        t.damage = attackPower;
+        t.source = this;
+        Destroy(t.gameObject, spinDuration);
+        currentAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
         lastSpinTime = Time.time;
     }
     void Attack()

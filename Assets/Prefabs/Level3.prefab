@@ -10687,6 +10687,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skele Ranger
       objectReference: {fileID: 0}
+    - target: {fileID: 4525166230265571187, guid: a1aef33d743e53342ae35bdf03e17f44, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8647999695943423008, guid: a1aef33d743e53342ae35bdf03e17f44, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

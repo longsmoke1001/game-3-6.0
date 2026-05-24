@@ -4326,8 +4326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fe805207d973a46afb0b2f045f2509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <currHealth>k__BackingField: 50
-  <maxHealth>k__BackingField: 50
+  <currHealth>k__BackingField: 100
+  <maxHealth>k__BackingField: 100
   healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
   healthBarParent: {fileID: 0}
   movSpeed: 2

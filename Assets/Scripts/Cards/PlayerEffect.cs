@@ -15,6 +15,7 @@ public class PlayerEffect : Card
         MovSpeed,
         AttackSpeed,
         HealthOnHit,
+        reflectedDamageMultiplier,
         CanMoveWhileAttacking,
         CanMoveWhileDefending
     }
@@ -44,6 +45,9 @@ public class PlayerEffect : Card
                 break;
             case PlayerEffectType.HealthOnHit:
                 player.playerData.healthOnHit += effectValue;
+                break;
+            case PlayerEffectType.reflectedDamageMultiplier:
+                player.playerData.reflectedDamageMultiplier *= effectValue;
                 break;
             case PlayerEffectType.CanMoveWhileAttacking:
                 player.playerData.canMoveWhileAttacking = true;
