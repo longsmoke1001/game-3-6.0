@@ -1198,7 +1198,7 @@ GameObject:
   - component: {fileID: 629035945}
   - component: {fileID: 629035944}
   m_Layer: 5
-  m_Name: Stage Complete
+  m_Name: Paused
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1252,8 +1252,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4288085760
+  m_fontColor: {r: 0, g: 1, b: 0.588377, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9186,7 +9186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2009178506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9238,7 +9238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce67235847d93dd428078b55be189a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
+  currentLevel: 10
   playerData: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
   cardList:
   - {fileID: 11400000, guid: c27ea01be1f37d14bbf1cac91ec83faf, type: 2}
@@ -10092,6 +10092,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c27ea01be1f37d14bbf1cac91ec83faf, type: 2}
   - {fileID: 11400000, guid: 42ecd4b3368c04d428224604fb3b9dd3, type: 2}
   - {fileID: 11400000, guid: bbe6f2f685917194aa9b20e0ccca926f, type: 2}
+  - {fileID: 11400000, guid: 513199abdcab1834fb440e8d23924897, type: 2}
+  - {fileID: 11400000, guid: 5b2ce5bf8b8f32f41923f62554b6b697, type: 2}
+  - {fileID: 11400000, guid: d558e74c242fa9c43be0244a95fa811e, type: 2}
   usedList: []
   gameOverText: {fileID: 1202428806}
   stageText: {fileID: 2131930453}
@@ -10101,7 +10104,7 @@ MonoBehaviour:
   - {fileID: 5886398156504593990, guid: 09943929424b434458beb09dbfc2c7e8, type: 3}
   - {fileID: 2823024378709309324, guid: 0a7f054a2d21f914490295b2d0e0fd43, type: 3}
   - {fileID: 2629952763756683476, guid: 833b1ad1dfbb2f94eb2136fd2f5eceb3, type: 3}
-  notLosing: 1
+  notLosing: 0
   enemyTotal: 0
   enemiesKilled: 0
   enemyText: {fileID: 87675853}

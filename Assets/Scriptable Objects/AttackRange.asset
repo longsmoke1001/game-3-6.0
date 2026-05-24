@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: attack rangeX1.5
   usesRemaining: 3
+  id: 2
   effectType: 2
   effectValue: 1.5
   player: {fileID: 5830071295745790717, guid: 44352f06898d85848829e1d104a2e646, type: 3}
