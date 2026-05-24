@@ -19,6 +19,7 @@ public class Enemy : Character
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        player = FindAnyObjectByType<Player>();
         spawnPos = transform.position;
         if (gameManager == null)
             gameManager = FindAnyObjectByType<GameManager>();
@@ -44,14 +45,15 @@ public class Enemy : Character
     {
         if (gameManager == null)
             gameManager = FindAnyObjectByType<GameManager>();
-        maxHealth *= 1 + ((int)GlobalGameManager.Instance.currentLevel - 1) / 4;
+        maxHealth *= 1 + ((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count;
         currHealth = maxHealth;
-        for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / 4; i++)
+        for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count; i++)
         {
             Enemy enemy_ = Instantiate(gameObject, transform.position + new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0), Quaternion.identity).GetComponent<Enemy>();
         }
 
     }
+
     protected virtual void Update()
     {
         if (!isDead && currHealth <= 0f)

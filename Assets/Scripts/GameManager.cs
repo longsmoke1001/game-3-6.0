@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<Card> usedList;
     [SerializeField] TextMeshProUGUI gameOverText;
     [SerializeField] TextMeshProUGUI stageText;
-    [SerializeField] List<GameObject> levels;
+    [field: SerializeField] public List<GameObject> Levels { get; private set; }
     [SerializeField] bool notLosing = false;
     [SerializeField] int enemyTotal;
     [SerializeField] int enemiesKilled;
@@ -46,15 +46,17 @@ public class GameManager : MonoBehaviour
             portal.SetActive(true);
         }
     }
+
+
     void Start()
     {
         globalGameManager = GlobalGameManager.Instance;
-        Instantiate(levels[(globalGameManager.currentLevel-1)%4]);
+        //Instantiate(Levels[(globalGameManager.currentLevel-1)%Levels.Count]);
         foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
             e.Init();
         }
-        if ((globalGameManager.currentLevel - 1) % 4 == 3)
+        if ((globalGameManager.currentLevel - 1) % Levels.Count == 3)
             audioSource.clip = bossClip;
         portal = FindAnyObjectByType<Portal>().gameObject;
         portal.SetActive(false);

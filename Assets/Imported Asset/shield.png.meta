@@ -118,7 +118,7 @@ TextureImporter:
         width: 132
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,6 +153,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tornado
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 87
+        width: 140
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5001f239a526c5e4ebe2e00f705c027a
+      internalID: 17947370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline:
     - - {x: -128, y: -76.5}
       - {x: -128, y: 73.5}
@@ -173,6 +195,7 @@ TextureImporter:
     nameFileIdTable:
       shield_0: -1801984529
       shield_1: 2028641351
+      tornado: 17947370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

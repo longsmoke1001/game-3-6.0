@@ -19,7 +19,6 @@ public class EnemyAttacker : Enemy
     {
         base.Start();
         targetPos = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)) + spawnPos;
-        player = FindAnyObjectByType<Player>();
         if (player != null)
             playerTransform = player.transform;
     }

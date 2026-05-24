@@ -13,7 +13,7 @@ public class Demon : EnemyAttacker
     float ringTime = 1f;
     float ringOffset = 10f;
     float ringCooldown = 5f;
-    [SerializeField] float ringRadius = 1.75f;
+    [SerializeField] float ringRadius = 3.42f;
     float ringNum = 10;
     float ringDelay = 1f;
     float lastTeleportTime = -5f;
@@ -122,6 +122,7 @@ public class Demon : EnemyAttacker
         await Task.Delay((int)ringDelay*1000);
         Destroy(c);
         GameObject r = Instantiate(ring, ringPos, Quaternion.identity);
+        //r.transform.localScale = new Vector3(ringRadius, ringRadius, 1);
         r.GetComponent<Fire>().damage = attackPower;
         r.GetComponent<Fire>().source = this;
         r.SetActive(true);
