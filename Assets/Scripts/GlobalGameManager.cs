@@ -34,6 +34,7 @@ public class GlobalGameManager : MonoBehaviour
         public float reflectedDamageMultiplier = 1f;
         public bool canMoveWhileAttacking = false;
         public bool canMoveWhileDefending = false;
+        public float defendHealMultiplier = 0f;
     }
     void Awake()
     {
@@ -119,6 +120,7 @@ public class GlobalGameManager : MonoBehaviour
         data.reflectedDamageMultiplier = playerData.reflectedDamageMultiplier;
         data.canMoveWhileAttacking = playerData.canMoveWhileAttacking;
         data.canMoveWhileDefending = playerData.canMoveWhileDefending;
+        data.defendHealMultiplier = playerData.defendHealMultiplier;
         SaveManager.Save(data, "save.json");
     }
 }

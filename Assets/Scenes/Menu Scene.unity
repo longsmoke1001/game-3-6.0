@@ -1127,7 +1127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   playerData: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
-  save: 0
+  save: 1
   cardList:
   - {fileID: 11400000, guid: c27ea01be1f37d14bbf1cac91ec83faf, type: 2}
   - {fileID: 11400000, guid: 42ecd4b3368c04d428224604fb3b9dd3, type: 2}
@@ -1141,7 +1141,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0884b67c99c84db49a92b58d1eea5593, type: 2}
   runtimeCardList: []
   usedCards: []
-  difficultyMultiplier: 1
+  difficultyMultiplier: 2
 --- !u!4 &672561845
 Transform:
   m_ObjectHideFlags: 0
