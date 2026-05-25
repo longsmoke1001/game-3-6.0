@@ -16,14 +16,8 @@ public class SkeleMage : Skeleton
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             GameObject beam=Instantiate(attackEffect, transform.position/2+player.transform.position/2 , Quaternion.Euler(0,0,angle));
             beam.transform.localScale = new Vector3(direction.magnitude*correctionFactor, 1, 1);
-            Beam(beam);
+            Destroy(beam, 0.05f);
             state = EnemyState.Chasing;
         }
-    }
-
-    async Task Beam(GameObject beam)
-    { 
-        await Task.Delay(50);
-        Destroy(beam);
     }
 }

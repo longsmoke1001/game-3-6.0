@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button exitButton2;
     [SerializeField] GameObject cards;
     [SerializeField] List<Button> cardButtons;
+    [SerializeField] List<TextMeshProUGUI> remainingNumTexts;
     [SerializeField] Button setting;
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<Card> cardList;
@@ -103,11 +104,14 @@ public class GameManager : MonoBehaviour
         });
         cardList = globalGameManager.runtimeCardList;
         List<int> indexList = new List<int> { -1, -1, -1 };
+        List<int> pool= new List<int>();
+        for (int i = 0; i < cardList.Count; i++)
+            pool.Add(i);
         for (int i = 0; i < Mathf.Min(cardButtons.Count, cardList.Count); i++)
         {
-            indexList[i] = UnityEngine.Random.Range(0, cardList.Count - i);
-            for (int j = 0; j < i; j++)
-                indexList[i] += indexList[i] >= indexList[j] ? 1 : 0;
+            int randomIndex = UnityEngine.Random.Range(0, pool.Count);
+            indexList[i] = pool[randomIndex];
+            pool.RemoveAt(randomIndex);
         }
         Debug.Log("Card index: " + indexList[0] + " " + indexList[1] + " " + indexList[2]);
         for (int i = 0; i < Mathf.Min(cardButtons.Count, cardList.Count); i++)
@@ -126,6 +130,7 @@ public class GameManager : MonoBehaviour
                 cards.SetActive(false);
             });
             cardButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = cardList[indexList[i]].description;
+            remainingNumTexts[i].text = "Remaining uses: " + cardList[indexList[i]].usesRemaining;
         }
     }
 

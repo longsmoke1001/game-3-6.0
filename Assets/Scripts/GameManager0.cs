@@ -24,6 +24,9 @@ public class GameManager0 : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play();
+#if UNITY_WEBGL
+        exitButton.gameObject.SetActive(false);
+#endif
     }
 
     // Update is called once per frame

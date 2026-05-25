@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,7 +8,6 @@ public class Demon : EnemyAttacker
     [SerializeField] float attackDelay = 0.4f;
     [SerializeField] GameObject fireball;
     [SerializeField] GameObject ring;
-    float fireTime = 0.5f;
     float firingAngle;
     float lastRingTime = -9999f;
     float ringTime = 1f;
@@ -83,7 +83,8 @@ public class Demon : EnemyAttacker
     {
         if (Time.time - lastAttackTime > attackDelay)
         {
-            Ring();
+            for (int i = 0; i < ringNum; i++)
+                StartCoroutine("CreateRing");
             state = EnemyState.Idle;
         }
     }
@@ -104,23 +105,17 @@ public class Demon : EnemyAttacker
             f.GetComponent<Fire>().damage = attackPower;
             f.GetComponent<Fire>().source = this;
             f.SetActive(true);
-            Fireball(f);
+            Destroy(f,1);
         }
     }
 
-    async Task Ring()
-    {
-        for (int i = 0; i < ringNum; i++)
-            CreateRing();
-    }
-
-    async Task CreateRing()
+    IEnumerator CreateRing()
     {
         Vector3 offset = new Vector3(Random.Range(-ringOffset, ringOffset), Random.Range(-ringOffset, ringOffset), 0);
         Vector3 ringPos = transform.position + offset;
         GameObject c = Instantiate(circle, ringPos, Quaternion.identity);
         c.transform.localScale *= ringRadius / 1.75f;
-        await Task.Delay((int)ringDelay*1000);
+        yield return new WaitForSeconds(1);
         Destroy(c);
         GameObject r = Instantiate(ring, ringPos, Quaternion.identity);
         r.transform.localScale *= ringRadius/1.75f;
@@ -131,13 +126,9 @@ public class Demon : EnemyAttacker
         for (int i = 0; i < 5; i++)
         {
             r.GetComponent<CircleCollider2D>().radius = ringRadius/1.75f /6*(i+1)/5;
-            await Task.Delay((int)(ringTime * 200));
+            yield return new WaitForSeconds(0.2f);
         }
-    }
-    async Task Fireball(GameObject f)
-    {
-        await Task.Delay((int)(fireTime * 1000));
-        Destroy(f);
+        yield return null;
     }
     protected void Attack()
     {
