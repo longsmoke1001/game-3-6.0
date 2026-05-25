@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button exitButton2;
     [SerializeField] GameObject cards;
     [SerializeField] List<Button> cardButtons;
+    [SerializeField] Button setting;
     [SerializeField] AudioSource audioSource;
     [SerializeField] List<Card> cardList;
     [SerializeField] List<Card> usedList;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject lastLevel;
     [SerializeField] GameObject levelTen;
     [SerializeField] GameObject pause;
+    [SerializeField] GameObject mobileUI;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
@@ -57,6 +59,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+#if UNITY_ANDROID || UNITY_IOS
+        mobileUI.SetActive(true);
+        Input.simulateMouseWithTouches = false;
+#else
+        mobileUI.SetActive(false);
+#endif
+        setting.onClick.AddListener(() =>
+        {
+            Time.timeScale = 1-Time.timeScale;
+            pause.SetActive(!pause.activeSelf);
+        });
         globalGameManager = GlobalGameManager.Instance;
         if (globalGameManager.currentLevel == 15)
             Instantiate(lastLevel);

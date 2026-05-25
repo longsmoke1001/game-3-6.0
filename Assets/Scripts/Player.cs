@@ -14,6 +14,11 @@ public class Player : Character
     [SerializeField] Slider healthBar;
     [SerializeField] GameObject shieldEffect;
     [SerializeField] ParticleSystem hitEffect;
+    [SerializeField] Joystick joystick;
+    [SerializeField] Button attackButton;
+    [SerializeField] Button defendButton;
+    bool attackButtonPressed = false;
+    bool defendButtonPressed = false;
 
     [field: SerializeField] public PlayerData playerData { get; private set; }
     public static Player Instance { get; private set; }
@@ -31,6 +36,8 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
+        attackButton.onClick.AddListener(AttackButton);
+        defendButton.onClick.AddListener(DefendButton);
         maxHealth = playerData.maxHealth;
         currHealth = maxHealth;
     }
@@ -67,9 +74,9 @@ public class Player : Character
                 HandleDefending();
                 break;
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || joystick.Horizontal > 0)
             transform.localScale = new Vector2(-1, 1);
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) || joystick.Horizontal < 0)
             transform.localScale = new Vector2(1, 1);
         if (currHealth <= 0)
         {
@@ -79,7 +86,7 @@ public class Player : Character
 
     void TryStop()
     {
-        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && joystick.Horizontal == 0 && joystick.Vertical == 0)
         {
             state = PlayerState.Idle;
             anim.SetBool("1_Move", false);
@@ -87,12 +94,8 @@ public class Player : Character
     }
     void TryMove()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
-            if (Input.GetKeyDown(KeyCode.D))
-                transform.localScale = new Vector2(-1, 1);
-            if (Input.GetKeyDown(KeyCode.A))
-                transform.localScale = new Vector2(1, 1);
             state = PlayerState.Moving;
             anim.SetBool("1_Move", true);
         }
@@ -105,7 +108,7 @@ public class Player : Character
                 if ((e.transform.position - transform.position).magnitude < playerData.attackRange)
                 {
                     Debug.Log("attack");
-                    currHealth =Mathf.Min(currHealth+playerData.healthOnHit, maxHealth);
+                    currHealth = Mathf.Min(currHealth + playerData.healthOnHit, maxHealth);
                     e.TakeDamage(playerData.attackPower, this);
                     ParticleSystem h = Instantiate(hitEffect, e.transform.position, Quaternion.identity);
                     Destroy(h.gameObject, 0.1f);
@@ -144,11 +147,13 @@ public class Player : Character
             transform.Translate(Vector2.left * Time.deltaTime * playerData.movSpeed);
         if (Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * playerData.movSpeed);
+        transform.Translate(joystick.Horizontal * Time.deltaTime * playerData.movSpeed, joystick.Vertical * Time.deltaTime * playerData.movSpeed, 0);
     }
     void TryAttack()
     {
-        if (Input.GetMouseButton(0) && Time.time - lastAttackTime > 1 / playerData.attackSpeed)
+        if ((Input.GetMouseButton(0) || attackButtonPressed) && Time.time - lastAttackTime > 1 / playerData.attackSpeed)
         {
+            attackButtonPressed = false;
             lastAttackTime = Time.time;
             anim.SetTrigger("2_Attack");
             state = PlayerState.Attacking;
@@ -156,8 +161,9 @@ public class Player : Character
     }
     void TryDefend()
     {
-        if (Input.GetMouseButton(1) && Time.time - lastDefendTime > playerData.defendCooldown)
+        if ((Input.GetMouseButton(1) || defendButtonPressed) && Time.time - lastDefendTime > playerData.defendCooldown)
         {
+            defendButtonPressed = false;
             state = PlayerState.Defending;
             lastDefendTime = Time.time;
             shieldEffect.SetActive(true);
@@ -178,11 +184,22 @@ public class Player : Character
         if (state == PlayerState.Defending)
         {
             Debug.Log("defend");
-            if (playerData != null && this != null) source.TakeDamage(playerData.attackPower*playerData.reflectedDamageMultiplier, this);
-            currHealth = Mathf.Min(currHealth + playerData.defendHealMultiplier* playerData.attackPower* playerData.reflectedDamageMultiplier, maxHealth);
+            if (playerData != null && this != null) source.TakeDamage(playerData.attackPower * playerData.reflectedDamageMultiplier, this);
+            currHealth = Mathf.Min(currHealth + playerData.defendHealMultiplier * playerData.attackPower * playerData.reflectedDamageMultiplier, maxHealth);
             return;
         }
         base.TakeDamage(amount, source);
         anim.SetTrigger("3_Damaged");
+    }
+    public void AttackButton()
+    {
+        if (state == PlayerState.Idle || state == PlayerState.Moving)
+            attackButtonPressed = true;
+    }
+
+    public void DefendButton()
+    {
+        if (state == PlayerState.Idle || state == PlayerState.Moving)
+            defendButtonPressed = true;
     }
 }
