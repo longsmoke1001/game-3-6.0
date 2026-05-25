@@ -13,6 +13,7 @@ public class Player : Character
     float lastDefendTime = -9999f;
     [SerializeField] Slider healthBar;
     [SerializeField] GameObject shieldEffect;
+    [SerializeField] ParticleSystem hitEffect;
 
     [field: SerializeField] public PlayerData playerData { get; private set; }
     public static Player Instance { get; private set; }
@@ -106,6 +107,8 @@ public class Player : Character
                     Debug.Log("attack");
                     currHealth =Mathf.Min(currHealth+playerData.healthOnHit, maxHealth);
                     e.TakeDamage(playerData.attackPower, this);
+                    ParticleSystem h = Instantiate(hitEffect, e.transform.position, Quaternion.identity);
+                    Destroy(h.gameObject, 0.1f);
                 }
             state = PlayerState.Idle;
         }

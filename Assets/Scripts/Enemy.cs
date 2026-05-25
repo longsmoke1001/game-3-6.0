@@ -46,9 +46,9 @@ public class Enemy : Character
     {
         if (gameManager == null)
             gameManager = FindAnyObjectByType<GameManager>();
-        maxHealth *= Mathf.Pow(3,(((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
+        maxHealth *= GlobalGameManager.Instance.difficultyMultiplier/2*Mathf.Pow(3,(((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
         currHealth = maxHealth;
-        attackPower *= Mathf.Pow(1.5f, (((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
+        attackPower *= GlobalGameManager.Instance.difficultyMultiplier / 2 * Mathf.Pow(1.5f, (((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
         if (GlobalGameManager.Instance.currentLevel != 15&& GlobalGameManager.Instance.currentLevel != 10)
             for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count; i++)
             {

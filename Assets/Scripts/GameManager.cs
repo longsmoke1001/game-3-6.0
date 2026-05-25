@@ -137,6 +137,15 @@ public class GameManager : MonoBehaviour
     }
     public void Winning()
     {
+        if (globalGameManager.currentLevel >= 15)
+        {
+            Debug.Log("You win the game!");
+            Time.timeScale = 0;
+            winning.SetActive(true);
+            nextStageButton.gameObject.SetActive(false);
+            gameOverText.text = "You win!";
+            return;
+        }
         Debug.Log("You win!");
         globalGameManager.currentLevel++;
         Time.timeScale = 0;

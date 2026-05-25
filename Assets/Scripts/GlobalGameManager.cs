@@ -12,6 +12,7 @@ public class GlobalGameManager : MonoBehaviour
     public List<Card> cardList=new List<Card>();
     public List<Card> runtimeCardList=new List<Card>();
     public List<Card> usedCards;
+    public float difficultyMultiplier = 2f;
     [System.Serializable]
     public class Data
     {

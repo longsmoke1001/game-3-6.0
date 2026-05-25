@@ -9,6 +9,9 @@ public class GameManager0 : MonoBehaviour
     [SerializeField] Button startButton;
     [SerializeField] Button exitButton;
     [SerializeField] Button resetButton;
+    [SerializeField] GameObject frame;
+    [SerializeField] Button settingButton;
+    [SerializeField] Slider difficultySlider;
     AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,8 @@ public class GameManager0 : MonoBehaviour
         resetButton.onClick.AddListener(() => { GlobalGameManager.Instance.Reset(); });
         startButton.onClick.AddListener(StartGame);
         exitButton.onClick.AddListener(QuitGame);
+        settingButton.onClick.AddListener(() => { frame.SetActive(!frame.activeSelf); });
+        difficultySlider.onValueChanged.AddListener((value) => { GlobalGameManager.Instance.difficultyMultiplier = value; });
         audioSource = GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play();
