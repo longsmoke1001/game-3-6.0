@@ -24,5 +24,7 @@ MonoBehaviour:
   attackSpeed: 0.5
   attackdelay: 0.2
   healthOnHit: 0
+  reflectedDamageMultiplier: 1
   canMoveWhileAttacking: 0
   canMoveWhileDefending: 0
+  defendHealMultiplier: 0

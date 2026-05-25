@@ -193,13 +193,13 @@ public class Player : Character
     }
     public void AttackButton()
     {
-        if (state == PlayerState.Idle || state == PlayerState.Moving)
+        if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastAttackTime > 1 / playerData.attackSpeed)
             attackButtonPressed = true;
     }
 
     public void DefendButton()
     {
-        if (state == PlayerState.Idle || state == PlayerState.Moving)
+        if ((state == PlayerState.Idle || state == PlayerState.Moving)&& Time.time - lastDefendTime > playerData.defendCooldown)
             defendButtonPressed = true;
     }
 }

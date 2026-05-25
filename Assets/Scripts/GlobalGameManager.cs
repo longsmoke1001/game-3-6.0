@@ -84,6 +84,7 @@ public class GlobalGameManager : MonoBehaviour
             playerData.reflectedDamageMultiplier = data.reflectedDamageMultiplier;
             playerData.canMoveWhileAttacking = data.canMoveWhileAttacking;
             playerData.canMoveWhileDefending = data.canMoveWhileDefending;
+            playerData.defendHealMultiplier = data.defendHealMultiplier;
         }
         else
         {

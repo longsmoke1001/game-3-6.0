@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefendHealMultiplier
   m_EditorClassIdentifier: 
   description: heal 20% of reflected damage dealt
-  usesRemaining: 1
+  usesRemaining: 3
   id: 10
   effectType: 9
   effectValue: 0.2
