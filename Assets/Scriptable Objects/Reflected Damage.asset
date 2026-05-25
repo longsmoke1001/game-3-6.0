@@ -16,5 +16,5 @@ MonoBehaviour:
   usesRemaining: 3
   id: 9
   effectType: 6
-  effectValue: 2.5
+  effectValue: 2
   player: {fileID: 5830071295745790717, guid: 44352f06898d85848829e1d104a2e646, type: 3}

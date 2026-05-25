@@ -818,6 +818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   playerData: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
+  save: 0
   cardList:
   - {fileID: 11400000, guid: c27ea01be1f37d14bbf1cac91ec83faf, type: 2}
   - {fileID: 11400000, guid: 42ecd4b3368c04d428224604fb3b9dd3, type: 2}
@@ -828,6 +829,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 513199abdcab1834fb440e8d23924897, type: 2}
   - {fileID: 11400000, guid: 5b2ce5bf8b8f32f41923f62554b6b697, type: 2}
   - {fileID: 11400000, guid: d558e74c242fa9c43be0244a95fa811e, type: 2}
+  - {fileID: 11400000, guid: 0884b67c99c84db49a92b58d1eea5593, type: 2}
   runtimeCardList: []
   usedCards: []
 --- !u!4 &672561845

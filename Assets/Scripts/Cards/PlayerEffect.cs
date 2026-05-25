@@ -17,7 +17,8 @@ public class PlayerEffect : Card
         HealthOnHit,
         reflectedDamageMultiplier,
         CanMoveWhileAttacking,
-        CanMoveWhileDefending
+        CanMoveWhileDefending,
+        DefendHealMultiplier,
     }
     [SerializeField] PlayerEffectType effectType;
     [SerializeField] float effectValue;
@@ -54,6 +55,9 @@ public class PlayerEffect : Card
                 break;
             case PlayerEffectType.CanMoveWhileDefending:
                 player.playerData.canMoveWhileDefending = true;
+                break;
+            case PlayerEffectType.DefendHealMultiplier:
+                player.playerData.defendHealMultiplier += effectValue;
                 break;
         }
     }

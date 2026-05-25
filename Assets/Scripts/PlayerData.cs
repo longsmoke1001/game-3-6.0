@@ -20,6 +20,7 @@ public class PlayerData : ScriptableObject
      public float reflectedDamageMultiplier = 1f;
      public bool canMoveWhileAttacking = false;
      public bool canMoveWhileDefending = false;
+     public float defendHealMultiplier = 0f;
 
 
     public void Reset()
@@ -39,5 +40,6 @@ public class PlayerData : ScriptableObject
         reflectedDamageMultiplier = 1f;
         canMoveWhileAttacking = false;
         canMoveWhileDefending = false;
+        defendHealMultiplier = 0f;
     }
 }

@@ -1184,7 +1184,7 @@ Transform:
   - {fileID: 2543884414705732579}
   - {fileID: 3172050857304058266}
   - {fileID: 347676088407420690}
-  - {fileID: 4741438495266495868}
+  - {fileID: 4189020553930509197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2659522438182810671
@@ -6760,7 +6760,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!1001 &5596033725386011184
+--- !u!1001 &3911237503223555265
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -6818,11 +6818,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00015256554
+      value: 0.00015256465
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9999619
+      value: 0.999962
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6830,7 +6830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.008726557
+      value: 0.008726558
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6838,11 +6838,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6858,25 +6858,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2064042431784126943, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
       propertyPath: m_Name
-      value: Demon
-      objectReference: {fileID: 0}
-    - target: {fileID: 7906853472382231587, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
-      propertyPath: ringRadius
-      value: 1.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 7906853472382231587, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
-      propertyPath: <currHealth>k__BackingField
-      value: 50
+      value: Demon (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
---- !u!224 &4741438495266495868 stripped
+--- !u!224 &4189020553930509197 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 893368824840449868, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
-  m_PrefabInstance: {fileID: 5596033725386011184}
+  m_PrefabInstance: {fileID: 3911237503223555265}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6895751598998755786
 PrefabInstance:
@@ -7025,13 +7017,13 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
   healthBarParent: {fileID: 0}
   movSpeed: 2
+  attackPower: 5
   gameManager: {fileID: 0}
   chaseRange: 5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
   attackRange: 1
-  attackPower: 5
   attackSpeed: 0.5
   circle: {fileID: 8399493129761035464, guid: 4e86a1d8fea3dec4b931adfb3ec5dc34, type: 3}
   tornado: {fileID: -3043037580810373839, guid: e735b560725d38241b37eae2a59ba55a, type: 3}

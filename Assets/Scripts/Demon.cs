@@ -119,17 +119,18 @@ public class Demon : EnemyAttacker
         Vector3 offset = new Vector3(Random.Range(-ringOffset, ringOffset), Random.Range(-ringOffset, ringOffset), 0);
         Vector3 ringPos = transform.position + offset;
         GameObject c = Instantiate(circle, ringPos, Quaternion.identity);
+        c.transform.localScale *= ringRadius / 1.75f;
         await Task.Delay((int)ringDelay*1000);
         Destroy(c);
         GameObject r = Instantiate(ring, ringPos, Quaternion.identity);
-        //r.transform.localScale = new Vector3(ringRadius, ringRadius, 1);
+        r.transform.localScale *= ringRadius/1.75f;
         Destroy(r, ringTime);
         r.GetComponent<Fire>().damage = attackPower;
         r.GetComponent<Fire>().source = this;
         r.SetActive(true);
         for (int i = 0; i < 5; i++)
         {
-            r.GetComponent<CircleCollider2D>().radius = ringRadius /6*(i+1)/5;
+            r.GetComponent<CircleCollider2D>().radius = ringRadius/1.75f /6*(i+1)/5;
             await Task.Delay((int)(ringTime * 200));
         }
     }

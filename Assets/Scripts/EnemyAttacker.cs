@@ -12,7 +12,6 @@ public class EnemyAttacker : Enemy
     [SerializeField] protected float chaseRange = 5f;
     [SerializeField] protected LayerMask obstacleMask;
     [SerializeField] protected float attackRange = 1f;
-    [SerializeField] protected float attackPower = 5f;
     [SerializeField] protected float attackSpeed = 0.5f;
     // Start is called before the first frame update
     protected override void Start()

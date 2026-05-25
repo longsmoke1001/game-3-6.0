@@ -176,8 +176,10 @@ public class Player : Character
         {
             Debug.Log("defend");
             if (playerData != null && this != null) source.TakeDamage(playerData.attackPower*playerData.reflectedDamageMultiplier, this);
+            currHealth = Mathf.Min(currHealth + amount * playerData.defendHealMultiplier* playerData.attackPower* playerData.reflectedDamageMultiplier, maxHealth);
             return;
         }
         base.TakeDamage(amount, source);
+        anim.SetTrigger("3_Damaged");
     }
 }

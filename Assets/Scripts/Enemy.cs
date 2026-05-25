@@ -8,6 +8,7 @@ public class Enemy : Character
     [SerializeField] protected HealthBar healthBarPrefab;
     [SerializeField] protected Transform healthBarParent;
     [SerializeField] protected float movSpeed = 2f;
+    [SerializeField] protected float attackPower = 5f;
     protected Player player;
     protected HealthBar healthBar;
     bool isDead;
@@ -45,8 +46,9 @@ public class Enemy : Character
     {
         if (gameManager == null)
             gameManager = FindAnyObjectByType<GameManager>();
-        maxHealth *= 1 + ((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count;
+        maxHealth *= Mathf.Pow(3,(((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
         currHealth = maxHealth;
+        attackPower *= Mathf.Pow(1.5f, (((int)GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count));
         if (GlobalGameManager.Instance.currentLevel != 15&& GlobalGameManager.Instance.currentLevel != 10)
             for (int i = 0; i < (int)(GlobalGameManager.Instance.currentLevel - 1) / gameManager.Levels.Count; i++)
             {

@@ -6589,18 +6589,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619e64f74920f9346941b89cbcbd7691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <currHealth>k__BackingField: 100
-  <maxHealth>k__BackingField: 100
+  <currHealth>k__BackingField: 150
+  <maxHealth>k__BackingField: 150
   healthBarPrefab: {fileID: 0}
   healthBarParent: {fileID: 0}
   movSpeed: 2
+  attackPower: 7
   gameManager: {fileID: 0}
   chaseRange: 5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
   attackRange: 1
-  attackPower: 5
   attackSpeed: 0.5
   circle: {fileID: 0}
   tornado: {fileID: 0}

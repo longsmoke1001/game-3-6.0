@@ -8,6 +8,7 @@ public class GlobalGameManager : MonoBehaviour
     public static GlobalGameManager Instance { get; private set; }
     public int currentLevel = 1;
     [SerializeField] PlayerData playerData;
+    [SerializeField] bool save;
     public List<Card> cardList=new List<Card>();
     public List<Card> runtimeCardList=new List<Card>();
     public List<Card> usedCards;
@@ -56,7 +57,7 @@ public class GlobalGameManager : MonoBehaviour
     void Start()
     {
         Data data = SaveManager.Load<Data>("save.json");
-        if (data!=null)
+        if (data!=null&&save)
         {
             currentLevel = data.currentLevel;
             Debug.Log(data.cardId[0] - 1);

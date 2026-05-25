@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
         if ((float)enemiesKilled / (float)enemyTotal > 0.799999f)
         {
             enemyText.color = new Color(0, 255, 0, 255);
-            portal.SetActive(true);
+            if (portal != null)
+                portal.SetActive(true);
         }
     }
 
