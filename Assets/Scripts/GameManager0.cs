@@ -26,6 +26,7 @@ public class GameManager0 : MonoBehaviour
                 audioSource.Play();
 #if UNITY_WEBGL
         exitButton.gameObject.SetActive(false);
+        startButton.gameObject.transform.localPosition = new Vector3(0, startButton.gameObject.transform.localPosition.y, 0);
 #endif
     }
 
