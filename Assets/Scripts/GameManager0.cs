@@ -20,6 +20,7 @@ public class GameManager0 : MonoBehaviour
         startButton.onClick.AddListener(StartGame);
         exitButton.onClick.AddListener(QuitGame);
         settingButton.onClick.AddListener(() => { frame.SetActive(!frame.activeSelf); });
+        difficultySlider.value = GlobalGameManager.Instance.difficultyMultiplier;
         difficultySlider.onValueChanged.AddListener((value) => { GlobalGameManager.Instance.difficultyMultiplier = value; });
         audioSource = GetComponent<AudioSource>();
             if (audioSource != null)
