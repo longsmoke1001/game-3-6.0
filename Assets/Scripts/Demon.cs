@@ -115,8 +115,8 @@ public class Demon : EnemyAttacker
         Vector3 ringPos = transform.position + offset;
         GameObject c = Instantiate(circle, ringPos, Quaternion.identity);
         c.transform.localScale *= ringRadius / 1.75f;
-        Destroy(c,1);
-        yield return new WaitForSeconds(1);
+        Destroy(c,ringDelay);
+        yield return new WaitForSeconds(ringDelay);
         GameObject r = Instantiate(ring, ringPos, Quaternion.identity);
         r.transform.localScale *= ringRadius/1.75f;
         Destroy(r, ringTime);

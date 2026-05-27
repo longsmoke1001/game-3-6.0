@@ -155,10 +155,11 @@ public class GameManager : MonoBehaviour
     }
     public void Winning()
     {
+        setting.gameObject.SetActive(false);
+        Time.timeScale = 0;
         if (globalGameManager.currentLevel >= 15)
         {
             Debug.Log("You win the game!");
-            Time.timeScale = 0;
             winning.SetActive(true);
             nextStageButton.gameObject.SetActive(false);
             gameOverText.text = "You win!";
@@ -166,7 +167,6 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("You win!");
         globalGameManager.currentLevel++;
-        Time.timeScale = 0;
         SpawnCards();
     }
 

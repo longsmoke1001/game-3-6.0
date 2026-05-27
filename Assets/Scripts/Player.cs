@@ -17,6 +17,8 @@ public class Player : Character
     [SerializeField] Joystick joystick;
     [SerializeField] Button attackButton;
     [SerializeField] Button defendButton;
+    [SerializeField] Image attackCooldownImage;
+    [SerializeField] Image defendCooldownImage;
     bool attackButtonPressed = false;
     bool defendButtonPressed = false;
 
@@ -29,7 +31,8 @@ public class Player : Character
         Moving,
         Dashing,
         Attacking,
-        Defending
+        Defending,
+        Dead,
     }
 
     public PlayerState state = PlayerState.Idle;
@@ -73,6 +76,8 @@ public class Player : Character
                     HandleMoving();
                 HandleDefending();
                 break;
+            case PlayerState.Dead:
+                break;
         }
         if (Input.GetKeyDown(KeyCode.D) || joystick.Horizontal > 0)
             transform.localScale = new Vector2(-1, 1);
@@ -82,7 +87,15 @@ public class Player : Character
         {
             gameManager.Losing();
         }
+        attackCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastAttackTime) / (1 / playerData.attackSpeed));
+        defendCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastDefendTime) / playerData.defendCooldown);
     }
+
+    //void Die()
+    //{
+    //    state = PlayerState.Dead;
+    //    anim.SetTrigger("4_Death");
+    //}
 
     void TryStop()
     {
@@ -199,7 +212,7 @@ public class Player : Character
 
     public void DefendButton()
     {
-        if ((state == PlayerState.Idle || state == PlayerState.Moving)&& Time.time - lastDefendTime > playerData.defendCooldown)
+        if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastDefendTime > playerData.defendCooldown)
             defendButtonPressed = true;
     }
 }

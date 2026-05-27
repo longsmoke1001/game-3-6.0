@@ -12,19 +12,42 @@ public class GameManager0 : MonoBehaviour
     [SerializeField] GameObject frame;
     [SerializeField] Button settingButton;
     [SerializeField] Slider difficultySlider;
+    [SerializeField] GameObject difficultySelection;
+    [SerializeField] Slider difficultySlider2;
+    [SerializeField] Button confirmButton;
+    [SerializeField] GameObject mainUI;
+    [SerializeField] Button confirmButtonAtSetting;
+    [SerializeField] GameObject areYouSureUI;
+    [SerializeField] Button yesButton;
+    [SerializeField] Button noButton;
+    [SerializeField] GameObject dataDeletedUI;
+    [SerializeField] Button dataDeletedUIConFirmButton;
     AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
-        resetButton.onClick.AddListener(() => { GlobalGameManager.Instance.Reset(); });
-        startButton.onClick.AddListener(StartGame);
+        //mainUI
+        startButton.onClick.AddListener(StartButton);
         exitButton.onClick.AddListener(QuitGame);
-        settingButton.onClick.AddListener(() => { frame.SetActive(!frame.activeSelf); });
+        settingButton.onClick.AddListener(() => { frame.SetActive(true); mainUI.SetActive(false); });
+        //settingUI
+        confirmButton.onClick.AddListener(StartGame);
+        confirmButtonAtSetting.onClick.AddListener(() => { frame.SetActive(false); mainUI.SetActive(true); });
+        resetButton.onClick.AddListener(() => { areYouSureUI.SetActive(true); });
         difficultySlider.value = GlobalGameManager.Instance.difficultyMultiplier;
         difficultySlider.onValueChanged.AddListener((value) => { GlobalGameManager.Instance.difficultyMultiplier = value; });
+        //areYouSureUI
+        yesButton.onClick.AddListener(() => { areYouSureUI.SetActive(false); GlobalGameManager.Instance.Reset(); dataDeletedUI.SetActive(true); });
+        noButton.onClick.AddListener(() => { areYouSureUI.SetActive(false); });
+        //dataDeletedUI
+        dataDeletedUIConFirmButton.onClick.AddListener(() => { dataDeletedUI.SetActive(false); });
+        //difficulySelectionUI
+        difficultySlider2.value = GlobalGameManager.Instance.difficultyMultiplier;
+        difficultySlider2.onValueChanged.AddListener((value) => { GlobalGameManager.Instance.difficultyMultiplier = value; });
+        //audio
         audioSource = GetComponent<AudioSource>();
-            if (audioSource != null)
-                audioSource.Play();
+        if (audioSource != null)
+            audioSource.Play();
 #if UNITY_WEBGL
         exitButton.gameObject.SetActive(false);
         startButton.gameObject.transform.localPosition = new Vector3(0, startButton.gameObject.transform.localPosition.y, 0);
@@ -34,14 +57,26 @@ public class GameManager0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        difficultySlider.value = GlobalGameManager.Instance.difficultyMultiplier;
+        difficultySlider2.value = GlobalGameManager.Instance.difficultyMultiplier;
     }
     void StartGame()
     {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public static void QuitGame()
+    void StartButton()
+    {
+        if (GlobalGameManager.Instance.currentLevel == 1)
+        {
+            difficultySelection.SetActive(true);
+            mainUI.SetActive(false);
+        }
+        else
+            StartGame();
+    }
+
+public static void QuitGame()
     {
         Debug.Log("Quit requested");
 #if UNITY_EDITOR

@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
     float startingTime;
     float projectileTime = 3f;
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
         startingTime = Time.time;
     }
