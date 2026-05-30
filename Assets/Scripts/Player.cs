@@ -87,8 +87,12 @@ public class Player : Character
         {
             gameManager.Losing();
         }
-        attackCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastAttackTime) / (1 / playerData.attackSpeed));
+        attackCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastAttackTime)*playerData.attackSpeed);
         defendCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastDefendTime) / playerData.defendCooldown);
+        if((Time.time - lastAttackTime) * playerData.attackSpeed>1)
+            attackButton.interactable = true;
+        if ((Time.time - lastDefendTime) / playerData.defendCooldown > 1)
+            defendButton.interactable = true;
     }
 
     //void Die()
@@ -207,12 +211,18 @@ public class Player : Character
     public void AttackButton()
     {
         if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastAttackTime > 1 / playerData.attackSpeed)
+        {
             attackButtonPressed = true;
+            attackButton.interactable = false;
+        }
     }
 
     public void DefendButton()
     {
         if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastDefendTime > playerData.defendCooldown)
+        {
             defendButtonPressed = true;
+            defendButton.interactable = false;
+        }
     }
 }
