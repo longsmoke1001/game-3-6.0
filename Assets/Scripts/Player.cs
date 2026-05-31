@@ -9,9 +9,17 @@ public class Player : Character
     [field: SerializeField] public PlayerData playerData { get; private set; }
     [SerializeField] protected Joystick joystick;
     [SerializeField] protected Animator anim;
+    [SerializeField] protected GameManager gameManager;
     protected float lastAttackTime = -9999f;
     protected bool attackButtonPressed = false;
     protected bool defendButtonPressed = false;
+
+    protected override void Start()
+    {
+        maxHealth = playerData.maxHealth;
+        currHealth = maxHealth;
+        gameManager= FindAnyObjectByType<GameManager>();
+    }
     public enum PlayerState
     {
         Idle,
@@ -19,7 +27,19 @@ public class Player : Character
         Attacking,
         Casting,
     }
-        public PlayerState state = PlayerState.Idle;
+
+    protected virtual void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D) || joystick.Horizontal > 0)
+            transform.localScale = new Vector2(-1, 1);
+        if (Input.GetKeyDown(KeyCode.A) || joystick.Horizontal < 0)
+            transform.localScale = new Vector2(1, 1);
+        if (currHealth <= 0)
+        {
+            gameManager.Losing();
+        }
+    }
+    public PlayerState state = PlayerState.Idle;
     protected void HandleMoving()
     {
         if (Input.GetKey(KeyCode.W))

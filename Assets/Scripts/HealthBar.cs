@@ -7,9 +7,15 @@ public class HealthBar : MonoBehaviour
 {
     float currHealth;
     float maxHealth;
-    [SerializeField] Character character;
+    Character character;
     [SerializeField] Slider healthBar;
     [SerializeField] Vector3 worldOffset = new Vector3(0f, 1f, 0f);
+
+    void Start()
+    {
+        if (character == null)
+            character = FindAnyObjectByType<Player>();
+    }
     void Update()
     {
         if ( healthBar == null || Camera.main == null)

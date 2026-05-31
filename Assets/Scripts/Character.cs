@@ -7,7 +7,7 @@ public class Character : MonoBehaviour
     [field: SerializeField] public float currHealth { get; protected set; } = 100f;
     [field: SerializeField] public float maxHealth { get; protected set; } = 100f;
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         //maxHealth = GetComponent<Enemy>().maxHealth;
         currHealth = maxHealth;

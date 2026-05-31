@@ -72823,8 +72823,9 @@ MonoBehaviour:
   <playerData>k__BackingField: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
   joystick: {fileID: 518222683}
   anim: {fileID: 1484227146}
+  gameManager: {fileID: 0}
   state: 0
-  arrow: {fileID: 3549352669105276540, guid: d60c1ba0cb2d36e43b3923ca36cd26b9, type: 3}
+  arrow: {fileID: 4258310246130605243, guid: 597cd864be431564e9e609bfbef4e6cc, type: 3}
 --- !u!61 &1739091613
 BoxCollider2D:
   m_ObjectHideFlags: 0

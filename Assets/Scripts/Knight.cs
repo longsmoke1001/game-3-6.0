@@ -22,17 +22,17 @@ public class Knight : Player
 
     public PlayerState state = PlayerState.Idle;
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
+        base.Start();
         attackButton.onClick.AddListener(AttackButton);
         defendButton.onClick.AddListener(DefendButton);
-        maxHealth = playerData.maxHealth;
-        currHealth = maxHealth;
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
+        base.Update();
         switch (state)
         {
             case PlayerState.Idle:
@@ -56,14 +56,6 @@ public class Knight : Player
                     HandleMoving();
                 HandleDefending();
                 break;
-        }
-        if (Input.GetKeyDown(KeyCode.D) || joystick.Horizontal > 0)
-            transform.localScale = new Vector2(-1, 1);
-        if (Input.GetKeyDown(KeyCode.A) || joystick.Horizontal < 0)
-            transform.localScale = new Vector2(1, 1);
-        if (currHealth <= 0)
-        {
-            gameManager.Losing();
         }
         attackCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastAttackTime) * playerData.attackSpeed);
         defendCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastDefendTime) / playerData.defendCooldown);
