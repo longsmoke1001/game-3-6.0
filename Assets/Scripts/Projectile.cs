@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
+    public float speed = 10f;
     public float damage = 10f;
     public Character source;
     float startingTime;
-    float projectileTime = 3f;
+    [SerializeField] protected float projectileTime = 3f;
+    public bool projReturn;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,16 +21,28 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(Vector3.right.normalized * speed * Time.deltaTime);
         if (Time.time - startingTime > projectileTime)
-            Destroy(gameObject);
+            CheckReturn();
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<Character>(out Character character))
-            {
-                character.TakeDamage(damage, source);
-                Destroy(gameObject);
-            }
+        {
+            character.TakeDamage(damage, source);
+            CheckReturn();
+        }
+    }
+
+    void CheckReturn()
+    {
+        if (projReturn)
+        {
+            transform.Rotate(0, 0, 180);
+            startingTime= Time.time;
+            projReturn = false;
+        }
+        else 
+            Destroy(gameObject);
     }
 }

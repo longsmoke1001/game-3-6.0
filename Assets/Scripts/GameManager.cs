@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject levelTen;
     [SerializeField] GameObject pause;
     [SerializeField] GameObject mobileUI;
+    [SerializeField] List<Player> playerList;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
@@ -52,8 +53,9 @@ public class GameManager : MonoBehaviour
         if ((float)enemiesKilled / (float)enemyTotal > 0.799999f)
         {
             enemyText.color = new Color(0, 255, 0, 255);
-            if (portal != null)
-                portal.SetActive(true);
+            Winning();
+            //if (portal != null)
+            //    portal.SetActive(true);
         }
     }
 
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour
             pause.SetActive(!pause.activeSelf);
         });
         globalGameManager = GlobalGameManager.Instance;
+        Instantiate(playerList[globalGameManager.characterSelected], Vector3.zero, Quaternion.identity);
         if (globalGameManager.currentLevel == 15)
             Instantiate(lastLevel);
         else if (globalGameManager.currentLevel == 10)

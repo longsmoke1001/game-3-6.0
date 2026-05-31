@@ -11,7 +11,7 @@ public class FollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        player = FindAnyObjectByType<Player>();
     }
 
     //Update is called once per frame
@@ -22,6 +22,7 @@ public class FollowPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.position = player.transform.position + new Vector3(offsetX, offsetY, offsetZ);
+        if (player != null)
+            transform.position = player.transform.position + new Vector3(offsetX, offsetY, offsetZ);
     }
 }

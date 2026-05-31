@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1174003260313370460}
   - component: {fileID: 2166907738472903591}
-  - component: {fileID: 4258310246130605243}
   - component: {fileID: -2672784861040371611}
+  - component: {fileID: 3237453825748231209}
   m_Layer: 8
-  m_Name: Ranger Arrow
+  m_Name: Stacking Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,21 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4258310246130605243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3912805847250589473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93801ad664f97e488a3949ca77639d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
-  damage: 10
-  source: {fileID: 0}
 --- !u!61 &-2672784861040371611
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -150,3 +135,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.61, y: 0.18}
   m_EdgeRadius: 0
+--- !u!114 &3237453825748231209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3912805847250589473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab45fa7d21179164887cb0c69f1de7e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  damage: 10
+  source: {fileID: 0}

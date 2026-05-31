@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class GlobalGameManager : MonoBehaviour
@@ -8,33 +9,21 @@ public class GlobalGameManager : MonoBehaviour
     public static GlobalGameManager Instance { get; private set; }
     public int currentLevel = 1;
     [SerializeField] PlayerData playerData;
+    public PlayerData runtimePlayerData;
     [SerializeField] bool save;
-    public List<Card> cardList=new List<Card>();
-    public List<Card> runtimeCardList=new List<Card>();
+    public List<Card> cardList = new List<Card>();
+    public List<Card> knightCardList = new List<Card>();
+    public List<Card> rangerCardList = new List<Card>();
+    public List<Card> runtimeCardList = new List<Card>();
     public List<Card> usedCards;
     public float difficultyMultiplier = 1f;
+    public int characterSelected = 0; // 0: none, 1: knight, 2: ranger
     [System.Serializable]
     public class Data
     {
         public int currentLevel = 1;
-        public List<int> cardId=new List<int>();
-        public List<int> usesRemaining = new List<int>();
-        public float maxHealth = 20f;
-        public float movSpeed = 5f;
-        public float dashCooldown = 1f;
-        public float attackPower = 5f;
-        public float attackRange = 2f;
-        public float dashDuration = 0.1f;
-        public float dashSpeed = 20f;
-        public float defendDuration = 0.5f;
-        public float defendCooldown = 2f;
-        public float attackSpeed = 0.5f;
-        public float attackdelay = 0.2f;
-        public float healthOnHit = 0f;
-        public float reflectedDamageMultiplier = 1f;
-        public bool canMoveWhileAttacking = false;
-        public bool canMoveWhileDefending = false;
-        public float defendHealMultiplier = 0f;
+        public int characterSelected = 0;
+        public List<(int, int)> cardId = new List<(int, int)>();
     }
     void Awake()
     {
@@ -49,7 +38,7 @@ public class GlobalGameManager : MonoBehaviour
 
     public void Reset()
     {
-        playerData.Reset();
+        runtimePlayerData = Instantiate(playerData);
         currentLevel = 1;
         runtimeCardList.Clear();
         foreach (var card in cardList)
@@ -59,36 +48,26 @@ public class GlobalGameManager : MonoBehaviour
     void Start()
     {
         Data data = SaveManager.Load<Data>("save.json");
-        if (data!=null&&save)
+        if (data != null && save)
         {
             currentLevel = data.currentLevel;
-            Debug.Log(data.cardId[0] - 1);
-            for (int i=0;i< data.cardId.Count; i++)
+            characterSelected = data.characterSelected;
+            Dictionary<int, Card> cards = new Dictionary<int, Card>(cardList.Count);
+            for (int i = 0; i < cardList.Count; i++)
             {
-                Card c = Instantiate(cardList[data.cardId[i] - 1]);
-                c.usesRemaining = data.usesRemaining[i];
+                cards[i] = cardList[i];
+            }
+            for (int i = 0; i < data.cardId.Count; i++)
+            {
+                Card c = Instantiate(cards[data.cardId[i].Item1]);
+                c.usesRemaining = data.cardId[i].Item2;
                 runtimeCardList.Add(c);
             }
-            playerData.maxHealth = data.maxHealth;
-            playerData.movSpeed = data.movSpeed;
-            playerData.dashCooldown = data.dashCooldown;
-            playerData.attackPower = data.attackPower;
-            playerData.attackRange = data.attackRange;
-            playerData.dashDuration = data.dashDuration;
-            playerData.dashSpeed = data.dashSpeed;
-            playerData.defendDuration = data.defendDuration;
-            playerData.defendCooldown = data.defendCooldown;
-            playerData.attackSpeed = data.attackSpeed;
-            playerData.attackdelay = data.attackdelay;
-            playerData.healthOnHit = data.healthOnHit;
-            playerData.reflectedDamageMultiplier = data.reflectedDamageMultiplier;
-            playerData.canMoveWhileAttacking = data.canMoveWhileAttacking;
-            playerData.canMoveWhileDefending = data.canMoveWhileDefending;
-            playerData.defendHealMultiplier = data.defendHealMultiplier;
+            runtimePlayerData = SaveManager.LoadScriptableObject<PlayerData>("playerData.json");
         }
         else
         {
-            playerData.Reset();
+            runtimePlayerData = Instantiate(playerData);
             foreach (var card in cardList)
                 runtimeCardList.Add(Instantiate(card));
         }
@@ -101,27 +80,24 @@ public class GlobalGameManager : MonoBehaviour
     {
         Data data = new Data();
         data.currentLevel = currentLevel;
-        foreach(var c in runtimeCardList)
+        data.characterSelected = characterSelected;
+        Dictionary<Card, int> cardId = new Dictionary<Card, int>(cardList.Count);
+        for (int i = 0; i < cardList.Count; i++)
         {
-            data.cardId.Add(c.id);
-            data.usesRemaining.Add(c.usesRemaining);
+            cardId[cardList[i]] = i;
         }
-        data.maxHealth = playerData.maxHealth;
-        data.movSpeed = playerData.movSpeed;
-        data.dashCooldown = playerData.dashCooldown;
-        data.attackPower = playerData.attackPower;
-        data.attackRange = playerData.attackRange;
-        data.dashDuration = playerData.dashDuration;
-        data.dashSpeed = playerData.dashSpeed;
-        data.defendDuration = playerData.defendDuration;
-        data.defendCooldown = playerData.defendCooldown;
-        data.attackSpeed = playerData.attackSpeed;
-        data.attackdelay = playerData.attackdelay;
-        data.healthOnHit = playerData.healthOnHit;
-        data.reflectedDamageMultiplier = playerData.reflectedDamageMultiplier;
-        data.canMoveWhileAttacking = playerData.canMoveWhileAttacking;
-        data.canMoveWhileDefending = playerData.canMoveWhileDefending;
-        data.defendHealMultiplier = playerData.defendHealMultiplier;
+        foreach (var c in runtimeCardList)
+        {
+            data.cardId.Add((cardId[c], c.usesRemaining));
+        }
         SaveManager.Save(data, "save.json");
+        SaveManager.Save(runtimePlayerData, "playerData.json");
+    }
+
+    public void SelectingCardList(List<Card> cardList)
+    {
+        runtimeCardList.Clear();
+        foreach (var card in cardList)
+            runtimeCardList.Add(Instantiate(card));
     }
 }

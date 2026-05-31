@@ -32,6 +32,29 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    public static T LoadScriptableObject<T>(string fileName) where T : ScriptableObject
+    {
+        string path = Path.Combine(Application.persistentDataPath, fileName);
+
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+
+            // 建立 ScriptableObject 實例
+            T obj = ScriptableObject.CreateInstance<T>();
+
+            // 用 JSON 覆蓋欄位
+            JsonUtility.FromJsonOverwrite(json, obj);
+
+            Debug.Log($"讀檔成功: {path}");
+            return obj;
+        }
+        else
+        {
+            Debug.LogWarning($"找不到存檔: {path}");
+            return null; // 沒有檔案就回傳 null
+        }
+    }
     // 刪除存檔
     public static void Delete(string fileName)
     {

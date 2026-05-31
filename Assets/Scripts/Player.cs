@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : Character
 {
-    [field: SerializeField] public PlayerData playerData { get; private set; }
+    public PlayerData runtimePlayerData;
     [SerializeField] protected Joystick joystick;
     [SerializeField] protected Animator anim;
     [SerializeField] protected GameManager gameManager;
@@ -16,7 +16,9 @@ public class Player : Character
 
     protected override void Start()
     {
-        maxHealth = playerData.maxHealth;
+        joystick = FindAnyObjectByType<Joystick>();
+        runtimePlayerData = GlobalGameManager.Instance.runtimePlayerData;
+        maxHealth = runtimePlayerData.maxHealth;
         currHealth = maxHealth;
         gameManager= FindAnyObjectByType<GameManager>();
     }
@@ -43,19 +45,19 @@ public class Player : Character
     protected void HandleMoving()
     {
         if (Input.GetKey(KeyCode.W))
-            transform.Translate(Vector2.up * Time.deltaTime * playerData.movSpeed);
+            transform.Translate(Vector2.up * Time.deltaTime * runtimePlayerData.movSpeed);
         if (Input.GetKey(KeyCode.S))
-            transform.Translate(Vector2.down * Time.deltaTime * playerData.movSpeed);
+            transform.Translate(Vector2.down * Time.deltaTime * runtimePlayerData.movSpeed);
         if (Input.GetKey(KeyCode.A))
-            transform.Translate(Vector2.left * Time.deltaTime * playerData.movSpeed);
+            transform.Translate(Vector2.left * Time.deltaTime * runtimePlayerData.movSpeed);
         if (Input.GetKey(KeyCode.D))
-            transform.Translate(Vector2.right * Time.deltaTime * playerData.movSpeed);
-        transform.Translate(joystick.Horizontal * Time.deltaTime * playerData.movSpeed, joystick.Vertical * Time.deltaTime * playerData.movSpeed, 0);
+            transform.Translate(Vector2.right * Time.deltaTime * runtimePlayerData.movSpeed);
+        transform.Translate(joystick.Horizontal * Time.deltaTime * runtimePlayerData.movSpeed, joystick.Vertical * Time.deltaTime * runtimePlayerData.movSpeed, 0);
     }
 
     protected void TryAttack()
     {
-        if ((Input.GetMouseButton(0) || attackButtonPressed) && Time.time - lastAttackTime > 1 / playerData.attackSpeed)
+        if ((Input.GetMouseButton(0) || attackButtonPressed) && Time.time - lastAttackTime > 1 / runtimePlayerData.attackSpeed)
         {
             attackButtonPressed = false;
             lastAttackTime = Time.time;

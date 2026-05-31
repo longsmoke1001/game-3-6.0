@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 88ba4f162fff81540bfe789667b74205
+guid: 46f28175eb7b50646991535f09f87905
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5334005812046215396
+    second: 9698f05d-e64f-4ce6-9674-567c01141e03_removalai_preview_0
+  - first:
+      213: 5638910783054543594
+    second: 9698f05d-e64f-4ce6-9674-567c01141e03_removalai_preview_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -53,7 +59,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -94,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -107,7 +113,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -123,125 +129,55 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: arrow
+      name: knight
       rect:
         serializedVersion: 2
-        x: 182
-        y: 186
-        width: 60
-        height: 13
+        x: 16
+        y: 48
+        width: 209
+        height: 183
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 02908ce4dc62fa54ea1907444f660065
-      internalID: 1988672527
+      spriteID: 4e832e87602360a40800000000000000
+      internalID: 5334005812046215396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: fireball
+      name: ranger
       rect:
         serializedVersion: 2
-        x: 328
-        y: 146
-        width: 56
-        height: 37
+        x: 287
+        y: 47
+        width: 168
+        height: 178
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 759f4598f91ba804fbee69619b0dfff9
-      internalID: 1117531302
+      spriteID: aeaf5102b7f614e40800000000000000
+      internalID: 5638910783054543594
       vertices: []
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Beam
-      rect:
-        serializedVersion: 2
-        x: 535
-        y: 63
-        width: 60
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ad2f1ef852698a4f9b051132ea1c62f
-      internalID: -451065789
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: arrow1
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 95
-        width: 61
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f9457f1f4898b6429f81530921cac29
-      internalID: -1626978425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire arrow
-      rect:
-        serializedVersion: 2
-        x: 178
-        y: 155
-        width: 65
-        height: 21
-      alignment: 9
-      pivot: {x: 0.48961437, y: 0.415927}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7686d8c890d22be47b83b4003527cade
-      internalID: -161691318
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    outline:
-    - - {x: -132, y: 59.5}
-      - {x: -132, y: 88.5}
-      - {x: -49, y: 88.5}
-      - {x: -49, y: 59.5}
+    outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 74c48084dc7b6f94cbdd7e5dfa4d5e06
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -250,11 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Beam: -451065789
-      arrow: 1988672527
-      arrow1: -1626978425
-      fire arrow: -161691318
-      fireball: 1117531302
+      knight: 5334005812046215396
+      ranger: 5638910783054543594
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

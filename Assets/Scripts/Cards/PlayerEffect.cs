@@ -19,6 +19,11 @@ public class PlayerEffect : Card
         CanMoveWhileAttacking,
         CanMoveWhileDefending,
         DefendHealMultiplier,
+        ProjectileCount,
+        Pierce,
+        ProjReturn,
+        MovSpeedScaleDamage,
+        ProjSpeed,
     }
     [SerializeField] PlayerEffectType effectType;
     [SerializeField] float effectValue;
@@ -29,35 +34,52 @@ public class PlayerEffect : Card
         Player player = FindAnyObjectByType<Player>();
         switch (effectType)
         {
-           case PlayerEffectType.Health:
-                player.playerData.maxHealth *= effectValue;
+            case PlayerEffectType.Health:
+                player.runtimePlayerData.maxHealth *= effectValue;
                 break;
             case PlayerEffectType.AttackPower:
-                player.playerData.attackPower *= effectValue;
+                player.runtimePlayerData.attackPower *= effectValue;
                 break;
             case PlayerEffectType.AttackRange:
-                player.playerData.attackRange *= effectValue;
+                player.runtimePlayerData.attackRange *= effectValue;
                 break;
             case PlayerEffectType.MovSpeed:
-                player.playerData.movSpeed *= effectValue;
+                player.runtimePlayerData.movSpeed *= effectValue;
                 break;
             case PlayerEffectType.AttackSpeed:
-                player.playerData.attackSpeed *= effectValue;
+                player.runtimePlayerData.attackSpeed *= effectValue;
                 break;
             case PlayerEffectType.HealthOnHit:
-                player.playerData.healthOnHit += effectValue;
+                player.runtimePlayerData.healthOnHit += effectValue;
                 break;
             case PlayerEffectType.reflectedDamageMultiplier:
-                player.playerData.reflectedDamageMultiplier *= effectValue;
+                player.runtimePlayerData.reflectedDamageMultiplier *= effectValue;
                 break;
             case PlayerEffectType.CanMoveWhileAttacking:
-                player.playerData.canMoveWhileAttacking = true;
+                player.runtimePlayerData.canMoveWhileAttacking = true;
                 break;
             case PlayerEffectType.CanMoveWhileDefending:
-                player.playerData.canMoveWhileDefending = true;
+                player.runtimePlayerData.canMoveWhileDefending = true;
                 break;
             case PlayerEffectType.DefendHealMultiplier:
-                player.playerData.defendHealMultiplier += effectValue;
+                player.runtimePlayerData.defendHealMultiplier += effectValue;
+                break;
+            case PlayerEffectType.ProjectileCount:
+                player.runtimePlayerData.projectileCount *= effectValue;
+                break;
+            case PlayerEffectType.Pierce:
+                player.runtimePlayerData.pierce = true;
+                player.runtimePlayerData.attackPower *= effectValue;
+                break;
+            case PlayerEffectType.ProjReturn:
+                player.runtimePlayerData.projReturn = true;
+                break;
+            case PlayerEffectType.MovSpeedScaleDamage:
+                player.runtimePlayerData.movSpeedScaleDamage = true;
+                break;
+            case PlayerEffectType.ProjSpeed:
+                player.runtimePlayerData.projSpeed *= 0.5f;
+                player.runtimePlayerData.attackPower *= effectValue;
                 break;
         }
     }

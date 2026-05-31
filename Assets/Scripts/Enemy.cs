@@ -18,8 +18,9 @@ public class Enemy : Character
     [SerializeField] protected GameManager gameManager;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         player = FindAnyObjectByType<Player>();
         spawnPos = transform.position;
         if (gameManager == null)

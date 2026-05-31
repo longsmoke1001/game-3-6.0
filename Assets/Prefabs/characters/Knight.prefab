@@ -3286,11 +3286,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2892362829009374545}
   - component: {fileID: 4283683379227638808}
-  - component: {fileID: 5830071295745790717}
   - component: {fileID: 8676170853410695940}
   - component: {fileID: 6075125850463234120}
+  - component: {fileID: -6484351460305088842}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6332,27 +6332,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 4c70df3312bb83346a1bf065b30d3467, type: 2}
   - {fileID: 7400000, guid: 1ef525d53ae254f7d82ef364ced85490, type: 2}
   - {fileID: 7400000, guid: fabe4f140fdb9cb448bc941c7c93e8b6, type: 2}
---- !u!114 &5830071295745790717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717646249565079327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc7b36721f89984cb5982e741c087d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <currHealth>k__BackingField: 100
-  <maxHealth>k__BackingField: 100
-  anim: {fileID: 1426941950306161335}
-  gameManager: {fileID: 0}
-  healthBar: {fileID: 0}
-  shieldEffect: {fileID: 0}
-  hitEffect: {fileID: 1873673379673018364, guid: aabeb21ffc1a6a543962a48eb06b3746, type: 3}
-  <playerData>k__BackingField: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
-  state: 0
 --- !u!50 &8676170853410695940
 Rigidbody2D:
   serializedVersion: 5
@@ -6426,6 +6405,34 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-6484351460305088842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717646249565079327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948ea22ac9e4b994db902735b4094564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <currHealth>k__BackingField: 100
+  <maxHealth>k__BackingField: 100
+  runtimePlayerData: {fileID: 0}
+  joystick: {fileID: 0}
+  anim: {fileID: 0}
+  gameManager: {fileID: 0}
+  state: 0
+  gameManager: {fileID: 0}
+  healthBar: {fileID: 0}
+  shieldEffect: {fileID: 0}
+  hitEffect: {fileID: 0}
+  attackButton: {fileID: 0}
+  defendButton: {fileID: 0}
+  attackCooldownImage: {fileID: 0}
+  defendCooldownImage: {fileID: 0}
+  state: 0
 --- !u!1 &6815888804277359852
 GameObject:
   m_ObjectHideFlags: 0

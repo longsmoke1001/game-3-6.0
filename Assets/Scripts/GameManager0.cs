@@ -22,7 +22,12 @@ public class GameManager0 : MonoBehaviour
     [SerializeField] Button noButton;
     [SerializeField] GameObject dataDeletedUI;
     [SerializeField] Button dataDeletedUIConFirmButton;
+    [SerializeField] GameObject characterSelection;
+    [SerializeField] Button knightButton;
+    [SerializeField] Button rangerButton;
+    [SerializeField] Button characterSelectConfirmButton;
     AudioSource audioSource;
+    int characterSelected = 0; // 0: knight, 1: ranger
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +46,16 @@ public class GameManager0 : MonoBehaviour
         noButton.onClick.AddListener(() => { areYouSureUI.SetActive(false); });
         //dataDeletedUI
         dataDeletedUIConFirmButton.onClick.AddListener(() => { dataDeletedUI.SetActive(false); });
+        //characterSelectionUI
+        knightButton.onClick.AddListener(() => { characterSelected = 0; knightButton.GetComponent<Image>().color = Color.green; rangerButton.GetComponent<Image>().color = Color.white; characterSelectConfirmButton.gameObject.SetActive(true); });
+        rangerButton.onClick.AddListener(() => { characterSelected = 1; rangerButton.GetComponent<Image>().color = Color.green; knightButton.GetComponent<Image>().color = Color.white; characterSelectConfirmButton.gameObject.SetActive(true); });
+        characterSelectConfirmButton.onClick.AddListener(() =>
+        {
+            difficultySelection.SetActive(true);
+            characterSelection.SetActive(false);
+            GlobalGameManager.Instance.characterSelected = characterSelected;
+            GlobalGameManager.Instance.SelectingCardList(characterSelected == 0 ? GlobalGameManager.Instance.knightCardList : GlobalGameManager.Instance.rangerCardList);
+        });
         //difficulySelectionUI
         difficultySlider2.value = GlobalGameManager.Instance.difficultyMultiplier;
         difficultySlider2.onValueChanged.AddListener((value) => { GlobalGameManager.Instance.difficultyMultiplier = value; });
@@ -69,14 +84,14 @@ public class GameManager0 : MonoBehaviour
     {
         if (GlobalGameManager.Instance.currentLevel == 1)
         {
-            difficultySelection.SetActive(true);
+            characterSelection.SetActive(true);
             mainUI.SetActive(false);
         }
         else
             StartGame();
     }
 
-public static void QuitGame()
+    public static void QuitGame()
     {
         Debug.Log("Quit requested");
 #if UNITY_EDITOR
