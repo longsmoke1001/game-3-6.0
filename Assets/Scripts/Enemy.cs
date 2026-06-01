@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : Character
 {
     [SerializeField] protected HealthBar healthBarPrefab;
-    [SerializeField] protected Transform healthBarParent;
+    protected Transform healthBarParent;
     [SerializeField] protected float movSpeed = 2f;
     [SerializeField] protected float attackPower = 5f;
     protected Player player;
@@ -30,15 +30,7 @@ public class Enemy : Character
             anim = GetComponentInChildren<Animator>();
         if (healthBarPrefab != null)
         {
-            Debug.Log("healthBarPrefab is not null");
-            Transform parent = healthBarParent;
-            if (parent == null)
-            {
-                Canvas canvas = FindAnyObjectByType<Canvas>();
-                if (canvas != null)
-                    parent = canvas.transform;
-            }
-            healthBar = Instantiate(healthBarPrefab, parent);
+            healthBar = Instantiate(healthBarPrefab, GameObject.Find("InstantiateCanvas").transform);
             healthBar.Init(this);
         }
     }

@@ -12,8 +12,8 @@ public class PlayerData : ScriptableObject
     public float attackRange = 2f;
     public float dashDuration = 0.1f;
     public float dashSpeed = 20f;
-    public float defendDuration = 0.5f;
-    public float defendCooldown = 2f;
+    public float defendDuration = 1f;
+    public float skillCooldown = 2f;
     public float attackSpeed = 0.5f;
     public float attackdelay = 0.2f;
     public float healthOnHit = 0f;

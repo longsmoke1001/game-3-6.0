@@ -37,7 +37,6 @@ public class EnemyAttacker : Enemy
             {
                 targetPos = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)) + spawnPos;
                 isWaiting = true;
-                startWaitingTime = Time.time;
                 if (anim != null)
                     anim.SetBool("1_Move", false);
             }
@@ -47,6 +46,7 @@ public class EnemyAttacker : Enemy
             if (Time.time - startWaitingTime > waitingTime)
             {
                 isWaiting = false;
+                startWaitingTime = Time.time;
             }
 
             if (anim != null)
@@ -64,6 +64,6 @@ public class EnemyAttacker : Enemy
             return false;
         RaycastHit2D hit = Physics2D.Linecast(from, to, obstacleMask);
         Debug.DrawLine(from, to, Color.red);
-        return hit.collider == player.GetComponent<BoxCollider2D>() && hit.collider.gameObject != gameObject;
+        return hit.collider == null||(player.GetComponent<BoxCollider2D>() && hit.collider.gameObject != gameObject);
     }
 }

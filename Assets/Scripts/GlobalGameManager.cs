@@ -18,12 +18,23 @@ public class GlobalGameManager : MonoBehaviour
     public List<Card> usedCards;
     public float difficultyMultiplier = 1f;
     public int characterSelected = 0; // 0: none, 1: knight, 2: ranger
+    public float totalPlayTime = 0f;
     [System.Serializable]
     public class Data
     {
         public int currentLevel = 1;
         public int characterSelected = 0;
-        public List<(int, int)> cardId = new List<(int, int)>();
+        public List<int> cardId = new List<int>();
+        public List<int> cardUsesRemaining = new List<int>();
+        public List<int> usedCardId = new List<int>();
+        public List<int> usedCardUsesRemaining = new List<int>();
+        public float totalPlayTime = 0f;
+    }
+
+    private void Update()
+    {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex==1)
+            totalPlayTime += Time.deltaTime;
     }
     void Awake()
     {
@@ -41,6 +52,8 @@ public class GlobalGameManager : MonoBehaviour
         runtimePlayerData = Instantiate(playerData);
         currentLevel = 1;
         runtimeCardList.Clear();
+        totalPlayTime = 0f;
+        usedCards = new List<Card>();
         foreach (var card in cardList)
             runtimeCardList.Add(Instantiate(card));
     }
@@ -52,6 +65,7 @@ public class GlobalGameManager : MonoBehaviour
         {
             currentLevel = data.currentLevel;
             characterSelected = data.characterSelected;
+            totalPlayTime = data.totalPlayTime;
             Dictionary<int, Card> cards = new Dictionary<int, Card>(cardList.Count);
             for (int i = 0; i < cardList.Count; i++)
             {
@@ -59,9 +73,15 @@ public class GlobalGameManager : MonoBehaviour
             }
             for (int i = 0; i < data.cardId.Count; i++)
             {
-                Card c = Instantiate(cards[data.cardId[i].Item1]);
-                c.usesRemaining = data.cardId[i].Item2;
+                Card c = Instantiate(cards[data.cardId[i]]);
+                c.usesRemaining = data.cardUsesRemaining[i];
                 runtimeCardList.Add(c);
+            }
+            for (int i = 0; i < data.usedCardId.Count; i++)
+            {
+                Card c = Instantiate(cards[data.usedCardId[i]]);
+                c.usesRemaining = data.usedCardUsesRemaining[i];
+                usedCards.Add(c);
             }
             runtimePlayerData = SaveManager.LoadScriptableObject<PlayerData>("playerData.json");
         }
@@ -81,14 +101,21 @@ public class GlobalGameManager : MonoBehaviour
         Data data = new Data();
         data.currentLevel = currentLevel;
         data.characterSelected = characterSelected;
-        Dictionary<Card, int> cardId = new Dictionary<Card, int>(cardList.Count);
+        data.totalPlayTime = totalPlayTime;
+        Dictionary<string, int> cardId = new Dictionary<string, int>(cardList.Count);
         for (int i = 0; i < cardList.Count; i++)
         {
-            cardId[cardList[i]] = i;
+            cardId[cardList[i].description] = i;
         }
         foreach (var c in runtimeCardList)
         {
-            data.cardId.Add((cardId[c], c.usesRemaining));
+            data.cardId.Add(cardId[c.description]);
+            data.cardUsesRemaining.Add(c.usesRemaining);
+        }
+        foreach (var c in usedCards)
+        {
+            data.usedCardId.Add(cardId[c.description]);
+            data.usedCardUsesRemaining.Add(c.usesRemaining);
         }
         SaveManager.Save(data, "save.json");
         SaveManager.Save(runtimePlayerData, "playerData.json");
@@ -97,7 +124,15 @@ public class GlobalGameManager : MonoBehaviour
     public void SelectingCardList(List<Card> cardList)
     {
         runtimeCardList.Clear();
+        usedCards.Clear();
         foreach (var card in cardList)
+        {
             runtimeCardList.Add(Instantiate(card));
+            usedCards.Add(Instantiate(card));
+        }
+        foreach (var c in usedCards)
+        {
+            c.usesRemaining = 0;
+        }
     }
 }

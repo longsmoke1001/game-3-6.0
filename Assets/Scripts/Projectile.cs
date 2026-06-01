@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-
 public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
@@ -11,6 +10,7 @@ public class Projectile : MonoBehaviour
     float startingTime;
     [SerializeField] protected float projectileTime = 3f;
     public bool projReturn;
+    public bool projPierce;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,10 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(Vector3.right.normalized * speed * Time.deltaTime);
         if (Time.time - startingTime > projectileTime)
-            CheckReturn();
+            if (projReturn)
+                Return();
+            else
+                Destroy(gameObject);
 
     }
 
@@ -30,19 +33,19 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Character>(out Character character))
         {
             character.TakeDamage(damage, source);
-            CheckReturn();
+            if (projPierce)
+                return;
+            else if (projReturn)
+                Return();
+            else
+                Destroy(gameObject);
         }
     }
 
-    void CheckReturn()
+    protected void Return()
     {
-        if (projReturn)
-        {
-            transform.Rotate(0, 0, 180);
-            startingTime= Time.time;
-            projReturn = false;
-        }
-        else 
-            Destroy(gameObject);
+        transform.Rotate(0, 0, 180);
+        startingTime = Time.time;
+        projReturn = false;
     }
 }

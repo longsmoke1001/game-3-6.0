@@ -3155,14 +3155,15 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
   healthBarParent: {fileID: 0}
   movSpeed: 2
+  attackPower: 5
   gameManager: {fileID: 0}
   chaseRange: 5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 9
   attackRange: 1
-  attackPower: 5
   attackSpeed: 0.5
+  attackDelay: 0.2
 --- !u!1 &578298359662813440
 GameObject:
   m_ObjectHideFlags: 0

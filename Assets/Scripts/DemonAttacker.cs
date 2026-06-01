@@ -22,6 +22,7 @@ public class DemonAttacker : EnemyAttacker
     override protected void Start()
     {
         base.Start();
+        lastSpinTime = Time.time - 5f;
         anim.speed = 0.2f / attackTime;
     }
     public enum EnemyState

@@ -10,7 +10,12 @@ public class StackingArrow : Projectile
                 r.Attack(character);
             else
                 character.TakeDamage(damage, source);
-            Destroy(gameObject);
+            if (projPierce)
+                return;
+            else if (projReturn)
+                Return();
+            else
+                Destroy(gameObject);
         }
     }
 }

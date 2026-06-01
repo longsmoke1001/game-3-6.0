@@ -4,21 +4,19 @@ using UnityEngine.UI;
 
 public class Knight : Player
 {
-    float lastDefendTime = -9999f;
-    [SerializeField] Slider healthBar;
     [SerializeField] GameObject shieldEffect;
     [SerializeField] ParticleSystem hitEffect;
-    [SerializeField] Button attackButton;
-    [SerializeField] Button defendButton;
-    [SerializeField] Image attackCooldownImage;
-    [SerializeField] Image defendCooldownImage;
+    Transform shieldEffectTransform;
     public static Player Instance { get; private set; }
     // Start is called before the first frame update
     override protected void Start()
     {
         base.Start();
+        shieldEffectTransform = GameObject.Find("InstantiateCanvas").transform;
+        attackButton = canvasManager.attackButton;
         attackButton.onClick.AddListener(AttackButton);
-        defendButton.onClick.AddListener(DefendButton);
+        skillButton = canvasManager.skillButton;
+        skillButton.onClick.AddListener(SkillButton);
     }
 
     // Update is called once per frame
@@ -49,12 +47,12 @@ public class Knight : Player
                 HandleDefending();
                 break;
         }
-        attackCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastAttackTime) * runtimePlayerData.attackSpeed);
-        defendCooldownImage.fillAmount = Mathf.Clamp01((Time.time - lastDefendTime) / runtimePlayerData.defendCooldown);
+        attackButtonFill = Mathf.Clamp01((Time.time - lastAttackTime) * runtimePlayerData.attackSpeed);
+        skillButtonFill = Mathf.Clamp01((Time.time - lastSkillTime) / runtimePlayerData.skillCooldown);
         if ((Time.time - lastAttackTime) * runtimePlayerData.attackSpeed > 1)
             attackButton.interactable = true;
-        if ((Time.time - lastDefendTime) / runtimePlayerData.defendCooldown > 1)
-            defendButton.interactable = true;
+        if ((Time.time - lastSkillTime) / runtimePlayerData.skillCooldown > 1)
+            skillButton.interactable = true;
     }
     void HandleAttacking()
     {
@@ -74,22 +72,19 @@ public class Knight : Player
     }
     void TryDefend()
     {
-        if ((Input.GetMouseButton(1) || defendButtonPressed) && Time.time - lastDefendTime > runtimePlayerData.defendCooldown)
+        if ((Input.GetMouseButton(1) || skillButtonPressed) && Time.time - lastSkillTime > runtimePlayerData.skillCooldown)
         {
-            defendButtonPressed = false;
+            skillButtonPressed = false;
             state = PlayerState.Casting;
-            lastDefendTime = Time.time;
-            shieldEffect.SetActive(true);
+            lastSkillTime = Time.time;
+            Destroy(Instantiate(shieldEffect, transform.position, Quaternion.identity, shieldEffectTransform), runtimePlayerData.defendDuration);
         }
     }
     void HandleDefending()
     {
         anim.SetBool("1_Move", false);
-        if (Time.time - lastDefendTime > runtimePlayerData.defendDuration)
-        {
+        if (Time.time - lastSkillTime > runtimePlayerData.defendDuration)
             state = PlayerState.Idle;
-            shieldEffect.SetActive(false);
-        }
     }
 
     public override void TakeDamage(float amount, Character source)
@@ -103,22 +98,5 @@ public class Knight : Player
         }
         base.TakeDamage(amount, source);
         anim.SetTrigger("3_Damaged");
-    }
-    public void AttackButton()
-    {
-        if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastAttackTime > 1 / runtimePlayerData.attackSpeed)
-        {
-            attackButtonPressed = true;
-            attackButton.interactable = false;
-        }
-    }
-
-    public void DefendButton()
-    {
-        if ((state == PlayerState.Idle || state == PlayerState.Moving) && Time.time - lastDefendTime > runtimePlayerData.defendCooldown)
-        {
-            defendButtonPressed = true;
-            defendButton.interactable = false;
-        }
     }
 }

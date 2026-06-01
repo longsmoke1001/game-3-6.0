@@ -31,11 +31,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip bossClip;
     [SerializeField] GlobalGameManager globalGameManager;
     [SerializeField] AudioClip boss2Clip;
-    [SerializeField] GameObject lastLevel;
-    [SerializeField] GameObject levelTen;
     [SerializeField] GameObject pause;
     [SerializeField] GameObject mobileUI;
     [SerializeField] List<Player> playerList;
+    [SerializeField] Demon demon;
+    [SerializeField] bool cheat = false;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
@@ -53,9 +53,9 @@ public class GameManager : MonoBehaviour
         if ((float)enemiesKilled / (float)enemyTotal > 0.799999f)
         {
             enemyText.color = new Color(0, 255, 0, 255);
-            Winning();
-            //if (portal != null)
-            //    portal.SetActive(true);
+            //Winning();
+            if (portal != null)
+                portal.SetActive(true);
         }
     }
 
@@ -70,17 +70,20 @@ public class GameManager : MonoBehaviour
 #endif
         setting.onClick.AddListener(() =>
         {
-            Time.timeScale = 1-Time.timeScale;
+            Time.timeScale = 1 - Time.timeScale;
             pause.SetActive(!pause.activeSelf);
         });
         globalGameManager = GlobalGameManager.Instance;
         Instantiate(playerList[globalGameManager.characterSelected], Vector3.zero, Quaternion.identity);
-        if (globalGameManager.currentLevel == 15)
-            Instantiate(lastLevel);
-        else if (globalGameManager.currentLevel == 10)
-            Instantiate(levelTen);
-        else
-            Instantiate(Levels[(globalGameManager.currentLevel - 1) % Levels.Count]);
+
+        Instantiate(Levels[(globalGameManager.currentLevel - 1) % Levels.Count]);
+        if (globalGameManager.currentLevel % 5 == 0)
+            for (int i = 0; i < globalGameManager.currentLevel / 5 - 1; i++)
+            {
+                Instantiate(demon, new Vector3(10, 2 * (globalGameManager.currentLevel / 5 - 2) - 4 * i, 0), Quaternion.identity);
+            }
+        if (globalGameManager.currentLevel == 1)
+            globalGameManager.totalPlayTime = 0;
         foreach (var e in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
             e.Init();
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         if ((globalGameManager.currentLevel - 1) % Levels.Count == 3)
             audioSource.clip = bossClip;
-        else if ((globalGameManager.currentLevel - 1) % Levels.Count == 4|| globalGameManager.currentLevel==15)
+        else if ((globalGameManager.currentLevel - 1) % Levels.Count == 4 || globalGameManager.currentLevel == 15)
             audioSource.clip = boss2Clip;
         portal = FindAnyObjectByType<Portal>().gameObject;
         portal.SetActive(false);
@@ -107,7 +110,7 @@ public class GameManager : MonoBehaviour
         });
         cardList = globalGameManager.runtimeCardList;
         List<int> indexList = new List<int> { -1, -1, -1 };
-        List<int> pool= new List<int>();
+        List<int> pool = new List<int>();
         for (int i = 0; i < cardList.Count; i++)
             pool.Add(i);
         for (int i = 0; i < Mathf.Min(cardButtons.Count, cardList.Count); i++)
@@ -127,9 +130,12 @@ public class GameManager : MonoBehaviour
                 if (card.usesRemaining <= 0)
                 {
                     cardList.Remove(card);
-                    globalGameManager.usedCards.Add(card);
                 }
+                foreach (var c in globalGameManager.usedCards)
+                    if (c.description==card.description)
+                        c.usesRemaining++;
                 winning.SetActive(true);
+                globalGameManager.currentLevel++;
                 cards.SetActive(false);
             });
             cardButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = cardList[indexList[i]].description;
@@ -141,8 +147,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Time.timeScale = 1-Time.timeScale;
+            Time.timeScale = 1 - Time.timeScale;
             pause.SetActive(!pause.activeSelf);
+        }
+        if (Input.GetKeyDown(KeyCode.K)&&cheat)
+        {
+            Time.timeScale = 0;
+            Winning();
         }
     }
     public void Losing()
@@ -169,14 +180,17 @@ public class GameManager : MonoBehaviour
             return;
         }
         Debug.Log("You win!");
-        globalGameManager.currentLevel++;
         SpawnCards();
     }
 
     void SpawnCards()
     {
+
         cards.SetActive(true);
+
     }
+
+
     // Update is called once per frame
     void UpdateText()
     {

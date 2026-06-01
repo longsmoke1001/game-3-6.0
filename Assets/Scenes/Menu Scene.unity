@@ -2210,6 +2210,7 @@ MonoBehaviour:
   usedCards: []
   difficultyMultiplier: 2
   characterSelected: 0
+  totalPlayTime: 0
 --- !u!4 &672561845
 Transform:
   m_ObjectHideFlags: 0
