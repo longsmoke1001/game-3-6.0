@@ -43,9 +43,13 @@ public class Ranger : Player, IAttackable
                 break;
             case PlayerState.Attacking:
                 HandleAttacking();
+                if (runtimePlayerData.canMoveWhileAttacking)
+                    HandleMoving();
                 break;
             case PlayerState.Casting:
                 HandleCasting();
+                if (runtimePlayerData.canMoveWhileAttacking)
+                    HandleMoving();
                 break;
         }
         stackText.gameObject.transform.position= Camera.main.WorldToScreenPoint(transform.position + new Vector3(textOffsetX,textOffsetY,0));
@@ -81,7 +85,12 @@ public class Ranger : Player, IAttackable
             Vector2 toEnemy = closestEnemy.transform.position - transform.position;
             for (int i = 0; i < runtimePlayerData.projectileCount; i++)
             {
-                Projectile a = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x)* Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount-1) - 30 * i));
+                GameObject arrow = ObjectPooler.SharedInstance.GetPooledObject(0);
+                arrow.SetActive(true);
+                Projectile a = arrow.GetComponent<Projectile>();
+                a.transform.position = transform.position;
+                a.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i);
+                //Projectile a = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x)* Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount-1) - 30 * i));
                 if (runtimePlayerData.projReturn)
                     a.projReturn = true;
                 if (runtimePlayerData.pierce)
@@ -111,6 +120,11 @@ public class Ranger : Player, IAttackable
         {
             float distance = 9999f;
             Enemy closestEnemy = null;
+            if (gameManager.Enemies.Count() == 0)
+            {
+                state = PlayerState.Idle;
+                return;
+            }
             foreach (var e in gameManager.Enemies)
             {
                 float d = Vector2.Distance(transform.position, e.transform.position);
@@ -123,7 +137,14 @@ public class Ranger : Player, IAttackable
             Vector2 toEnemy = closestEnemy.transform.position - transform.position;
             for (int i = 0; i < runtimePlayerData.projectileCount; i++)
             {
-                Projectile a = Instantiate(skill, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i));
+                GameObject arrow= ObjectPooler.SharedInstance.GetPooledObject(1);
+                Debug.Log(arrow);
+                arrow.SetActive(true);
+                Projectile a= arrow.GetComponent<Projectile>();
+                a.transform.position = transform.position;
+                Debug.Log(a.transform.position);
+                a.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i);
+                //Projectile a = Instantiate(skill, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i));
                 if (runtimePlayerData.projReturn)
                     a.projReturn = true;
                 if (runtimePlayerData.pierce)

@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
     public bool projReturn;
     public bool projPierce;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         startingTime = Time.time;
     }
@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
             if (projReturn)
                 Return();
             else
-                Destroy(gameObject);
+               gameObject.SetActive(false);
 
     }
 
@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
             else if (projReturn)
                 Return();
             else
-                Destroy(gameObject);
+                gameObject.SetActive(false);
         }
     }
 

@@ -15,7 +15,7 @@ public class StackingArrow : Projectile
             else if (projReturn)
                 Return();
             else
-                Destroy(gameObject);
+                gameObject.SetActive(false);
         }
     }
 }
