@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -63,6 +64,11 @@ public class Ranger : Player, IAttackable
         {
             float distance = 9999f;
             Enemy closestEnemy = null;
+            if (gameManager.Enemies.Count()==0)
+            {
+                state = PlayerState.Idle;
+                return;
+            }
             foreach (var e in gameManager.Enemies)
             {
                 float d = Vector2.Distance(transform.position, e.transform.position);

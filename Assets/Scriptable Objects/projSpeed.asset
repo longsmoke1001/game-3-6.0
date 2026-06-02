@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: damage X1.5 projectile speedX0.5
   usesRemaining: 3
-  effectType: 13
+  effectType: 14
   effectValue: 1.5

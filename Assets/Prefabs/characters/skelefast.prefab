@@ -6622,8 +6622,7 @@ MonoBehaviour:
   <currHealth>k__BackingField: 30
   <maxHealth>k__BackingField: 30
   healthBarPrefab: {fileID: 2049264164628476996, guid: c7837e3d3552d814a863c1501cd669a0, type: 3}
-  healthBarParent: {fileID: 0}
-  movSpeed: 7
+  movSpeed: 2
   attackPower: 5
   gameManager: {fileID: 0}
   chaseRange: 5

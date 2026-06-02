@@ -69,7 +69,6 @@ public class PlayerEffect : Card
                 break;
             case PlayerEffectType.Pierce:
                 player.runtimePlayerData.pierce = true;
-                player.runtimePlayerData.attackPower *= effectValue;
                 break;
             case PlayerEffectType.ProjReturn:
                 player.runtimePlayerData.projReturn = true;

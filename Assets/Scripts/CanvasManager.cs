@@ -55,7 +55,7 @@ public class CanvasManager : MonoBehaviour
             for(int i=0;i< globalGameManager.usedCards.Count;i++)
             {
                 if (globalGameManager.usedCards[i].usesRemaining != 0)
-                    usedCardsText.text += $"{globalGameManager.usedCards[i].description} x{globalGameManager.usedCards[i].usesRemaining}\n";
+                    usedCardsText.text += $"{globalGameManager.usedCards[i].description} (x{globalGameManager.usedCards[i].usesRemaining})\n";
             }
         });
         closeBuffsButton.onClick.AddListener(() => { Buffs.SetActive(false); });
