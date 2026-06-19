@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ranger : Player, IAttackable
+public class Ranger : Player
 {
     [SerializeField] Projectile arrow;
     [SerializeField] Projectile skill;
@@ -13,7 +13,7 @@ public class Ranger : Player, IAttackable
 
 
     float lastCastTime = -9999f;
-    int stacks = 0;
+    public int stacks = 0;
 
     protected override void Start()
     {
@@ -66,42 +66,32 @@ public class Ranger : Player, IAttackable
     {
         if (Time.time - lastAttackTime > runtimePlayerData.attackdelay)
         {
-            float distance = 9999f;
-            Enemy closestEnemy = null;
-            if (gameManager.Enemies.Count()==0)
-            {
-                state = PlayerState.Idle;
-                return;
-            }
-            foreach (var e in gameManager.Enemies)
-            {
-                float d = Vector2.Distance(transform.position, e.transform.position);
-                if (d < distance)
-                {
-                    distance = d;
-                    closestEnemy = e;
-                }
-            }
-            Vector2 toEnemy = closestEnemy.transform.position - transform.position;
-            for (int i = 0; i < runtimePlayerData.projectileCount; i++)
-            {
-                GameObject arrow = ObjectPooler.SharedInstance.GetPooledObject(0);
-                arrow.SetActive(true);
-                Projectile a = arrow.GetComponent<Projectile>();
-                a.transform.position = transform.position;
-                a.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i);
-                //Projectile a = Instantiate(arrow, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x)* Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount-1) - 30 * i));
-                if (runtimePlayerData.projReturn)
-                    a.projReturn = true;
-                if (runtimePlayerData.pierce)
-                    a.projPierce = true;
-                a.speed = runtimePlayerData.projSpeed;
-                a.source = this;
-                a.damage = runtimePlayerData.attackPower* (runtimePlayerData.movSpeedScaleDamage ? runtimePlayerData.movSpeed / 5 : 1);
-            }
+           ShootClosestEnemy(0,1);
             state = PlayerState.Idle;
         }
     }
+
+    void ShootClosestEnemy(int projId,int attackRatio)
+    {
+        float distance = 9999f;
+        Enemy closestEnemy = null;
+        if (gameManager.Enemies.Count() == 0)
+        {
+            state = PlayerState.Idle;
+            return;
+        }
+        foreach (var e in gameManager.Enemies)
+        {
+            float d = Vector2.Distance(transform.position, e.transform.position);
+            if (d < distance)
+            {
+                distance = d;
+                closestEnemy = e;
+            }
+        }
+        Shoot(projId, closestEnemy, runtimePlayerData.attackPower * attackRatio*(runtimePlayerData.movSpeedScaleDamage ? runtimePlayerData.movSpeed / 5 : 1), runtimePlayerData.projSpeed, runtimePlayerData.projectileCount, projectileSpreadAngle, runtimePlayerData.projReturn, runtimePlayerData.pierce);
+    }
+
 
     void TryCast()
     {
@@ -118,49 +108,10 @@ public class Ranger : Player, IAttackable
     {
         if (Time.time - lastCastTime > runtimePlayerData.attackdelay)
         {
-            float distance = 9999f;
-            Enemy closestEnemy = null;
-            if (gameManager.Enemies.Count() == 0)
-            {
-                state = PlayerState.Idle;
-                return;
-            }
-            foreach (var e in gameManager.Enemies)
-            {
-                float d = Vector2.Distance(transform.position, e.transform.position);
-                if (d < distance)
-                {
-                    distance = d;
-                    closestEnemy = e;
-                }
-            }
-            Vector2 toEnemy = closestEnemy.transform.position - transform.position;
-            for (int i = 0; i < runtimePlayerData.projectileCount; i++)
-            {
-                GameObject arrow= ObjectPooler.SharedInstance.GetPooledObject(1);
-                Debug.Log(arrow);
-                arrow.SetActive(true);
-                Projectile a= arrow.GetComponent<Projectile>();
-                a.transform.position = transform.position;
-                Debug.Log(a.transform.position);
-                a.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i);
-                //Projectile a = Instantiate(skill, transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(toEnemy.y, toEnemy.x) * Mathf.Rad2Deg + 15 * (runtimePlayerData.projectileCount - 1) - 30 * i));
-                if (runtimePlayerData.projReturn)
-                    a.projReturn = true;
-                if (runtimePlayerData.pierce)
-                    a.projPierce = true;
-                a.speed = runtimePlayerData.projSpeed;
-                a.damage = runtimePlayerData.attackPower * (1+stacks)*(runtimePlayerData.movSpeedScaleDamage?runtimePlayerData.movSpeed/5:1);
-                a.source = this;
-            }
-            stacks = 0;
+            ShootClosestEnemy(1,stacks+1);
+            stacks=0;
             state = PlayerState.Idle;
         }
-    }
-    public void Attack(Character target)
-    {
-        target.TakeDamage(runtimePlayerData.attackPower* (runtimePlayerData.movSpeedScaleDamage ? runtimePlayerData.movSpeed / 5 : 1), this);
-        stacks++;
     }
 
     override protected void SkillButton()

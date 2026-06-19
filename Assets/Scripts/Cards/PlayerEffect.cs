@@ -65,7 +65,7 @@ public class PlayerEffect : Card
                 player.runtimePlayerData.defendHealMultiplier += effectValue;
                 break;
             case PlayerEffectType.ProjectileCount:
-                player.runtimePlayerData.projectileCount *= effectValue;
+                player.runtimePlayerData.projectileCount *= (int)effectValue;
                 break;
             case PlayerEffectType.Pierce:
                 player.runtimePlayerData.pierce = true;

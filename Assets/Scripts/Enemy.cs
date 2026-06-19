@@ -15,16 +15,12 @@ public class Enemy : Character
     protected Animator anim;
     protected Vector2 spawnPos;
 
-    [SerializeField] protected GameManager gameManager;
-
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         player = FindAnyObjectByType<Player>();
         spawnPos = transform.position;
-        if (gameManager == null)
-            gameManager = FindAnyObjectByType<GameManager>();
         gameManager.AddEnemy(this);
         if (anim == null)
             anim = GetComponentInChildren<Animator>();

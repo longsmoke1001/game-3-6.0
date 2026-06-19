@@ -19,8 +19,8 @@ MonoBehaviour:
   attackRange: 2
   dashDuration: 0.1
   dashSpeed: 20
-  defendDuration: 0.5
-  defendCooldown: 2
+  defendDuration: 1
+  skillCooldown: 2
   attackSpeed: 0.5
   attackdelay: 0.2
   healthOnHit: 0
@@ -28,3 +28,8 @@ MonoBehaviour:
   canMoveWhileAttacking: 0
   canMoveWhileDefending: 0
   defendHealMultiplier: 0
+  projectileCount: 1
+  pierce: 0
+  projReturn: 0
+  movSpeedScaleDamage: 0
+  projSpeed: 10

@@ -71854,7 +71854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce67235847d93dd428078b55be189a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
+  currentLevel: 3
   playerData: {fileID: 11400000, guid: 00df06f841906764bb0e539276faa825, type: 2}
   runtimePlayerData: {fileID: 0}
   save: 0
@@ -74803,6 +74803,7 @@ MonoBehaviour:
   - {fileID: 7603432912647749555, guid: f23843c2dea48ab4ba9b41d4dd2fbf9d, type: 3}
   demon: {fileID: 7906853472382231587, guid: 35cb7ad3f2d1e3845b7db5fce0b8dbf4, type: 3}
   cheat: 0
+  projectileId: 0
 --- !u!1 &7233044556691137062
 GameObject:
   m_ObjectHideFlags: 0

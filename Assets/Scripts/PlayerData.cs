@@ -21,7 +21,7 @@ public class PlayerData : ScriptableObject
     public bool canMoveWhileAttacking = false;
     public bool canMoveWhileDefending = false;
     public float defendHealMultiplier = 0f;
-    public float projectileCount = 1f;
+    public int projectileCount = 1;
     public bool pierce = false;
     public bool projReturn = false;
     public bool movSpeedScaleDamage = false;

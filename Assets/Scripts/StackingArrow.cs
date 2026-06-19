@@ -1,21 +1,12 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class StackingArrow : Projectile
 {
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<Character>(out Character character))
-        {
-            if (source.TryGetComponent<Ranger>(out Ranger r))
-                r.Attack(character);
-            else
-                character.TakeDamage(damage, source);
-            if (projPierce)
-                return;
-            else if (projReturn)
-                Return();
-            else
-                gameObject.SetActive(false);
-        }
+        if (collision.TryGetComponent<Character>(out Character character) && !character.hitAttackId.Contains(projectileId) && source.TryGetComponent<Ranger>(out Ranger r))
+            r.stacks++;
+        base.OnTriggerEnter2D(collision);
     }
 }

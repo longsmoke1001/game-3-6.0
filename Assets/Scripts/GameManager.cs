@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<Player> playerList;
     [SerializeField] Demon demon;
     [SerializeField] bool cheat = false;
+    public int projectileId;
     public List<Tuple<string, bool>> cardsList = new List<Tuple<string, bool>>();
 
     public void AddEnemy(Enemy enemy)
@@ -160,7 +161,6 @@ public class GameManager : MonoBehaviour
     {
         if (!notLosing)
         {
-            Debug.Log("You lose!");
             Time.timeScale = 0;
             winning.SetActive(true);
             nextStageButton.GetComponentInChildren<TextMeshProUGUI>().text = "Retry";

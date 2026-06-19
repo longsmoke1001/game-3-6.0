@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float projectileTime = 3f;
     public bool projReturn;
     public bool projPierce;
+    public int projectileId;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -30,8 +31,9 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<Character>(out Character character))
+        if (collision.gameObject.TryGetComponent<Character>(out Character character)&&!character.hitAttackId.Contains(projectileId))
         {
+            character.hitAttackId.Add(projectileId);
             character.TakeDamage(damage, source);
             if (projPierce)
                 return;
@@ -40,6 +42,7 @@ public class Projectile : MonoBehaviour
             else
                 gameObject.SetActive(false);
         }
+
     }
 
     protected void Return()

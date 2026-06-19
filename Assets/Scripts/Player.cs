@@ -9,7 +9,6 @@ public class Player : Character
     public PlayerData runtimePlayerData;
     protected Joystick joystick;
     protected Animator anim;
-    protected GameManager gameManager;
     public Sprite attackCooldownImage;
     public Sprite skillCooldownImage;
     protected CanvasManager canvasManager;
@@ -26,7 +25,6 @@ public class Player : Character
     {
         base.Start();
         canvasManager = FindAnyObjectByType<CanvasManager>();
-        gameManager = FindAnyObjectByType<GameManager>();
         anim = GetComponentInChildren<Animator>();
         joystick = canvasManager.joystick;
         attackButton = canvasManager.attackButton;
