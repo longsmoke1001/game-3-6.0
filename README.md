@@ -52,7 +52,7 @@ game-3-6.0/
 
 ### Steps
 
-1. Clone the repository:
+1.Clone the repository:
 
 2.Open the project in Unity Hub
 
