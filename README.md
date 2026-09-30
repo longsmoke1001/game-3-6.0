@@ -53,7 +53,7 @@ game-3-6.0/
 ### Steps
 
 1. Clone the repository:
-```bashgit clone https://github.com/longsmoke1001/game-3-6.0.git
+
 2.Open the project in Unity Hub
 
 3.Open the main scene in Assets/Scenes/
@@ -68,3 +68,4 @@ GitHub: @longsmoke1001
 Portfolio: longsmoke1001.github.io/MyPortfolio
 
 Itch.io: longsmoke1001.itch.io
+
