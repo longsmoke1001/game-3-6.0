@@ -4,13 +4,7 @@ A 2D roguelike action game built with Unity 6 (C#). Control a little knight, fig
 
 ![Unity](https://img.shields.io/badge/Unity-6-000000?style=flat-square&logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-239120?style=flat-square&logo=c-sharp&logoColor=white)
-
-## 🎮 Play
-
-| Platform | Link |
-|----------|------|
-| **WebGL** | [Play on Itch.io](https://longsmoke1001.itch.io/little-knight) |
-| **Android** | [Download APK](https://github.com/longsmoke1001/game-3-6.0/releases) |
+[Play on Itch.io](https://longsmoke1001.itch.io/little-knight) |
 
 ## 🎬 Gameplay
 
